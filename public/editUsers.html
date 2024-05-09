@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Edit User</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+    <header>
+        <h1>Edit User</h1>
+    </header>
+    <nav>
+        <a href="organizations.html">Organizations</a> |
+        <a href="users.html">Users</a> |
+        <a href="subscriptions.html">Subscriptions</a> |
+        <a href="languageModels.html">Language Models</a> |
+        <a href="subscriptionsLanguageModels.html">Subscriptions - Language Models</a>
+    </nav>
+    <main>
+        <section>
+            <h2>Add a New User</h2>
+            <form action="/users" method="post">
+                <fieldset>
+                    <legend>User Details:</legend>
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username"><br><br>
+
+                    <label for="email">Email</label>
+                    <input type="text" id="username" name="email">
+
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password"><br><br>
+
+                    <label for="remainingCredits">Remaining Credits</label>
+                    <input type="number" id="remainingCredits" name="remainingCredits"><br><br>
+
+                    <label for="organization">Organization</label>
+                    <select name="organization">
+                        <option value="0">&nbsp;</option>
+                        <option value="1">Combustion Research Lab</option>
+                        <option value="2">Energy and Sustainability Lab</option>
+                        <option value="3">RRC AI Club</option>
+                    </select>
+
+                    <label for="subscription">Subscription</label>
+                    <select name="subscription">
+                        <option value="0">&nbsp;</option>
+                        <option value="1">CRL</option>
+                        <option value="2">ESL</option>
+                        <option value="3">RAC</option>
+                        <option value="4">barnes-indv</option>
+                    </select>
+                </fieldset>
+                <br>
+                <input type="submit" value="Add User">
+            </form>
+        </section>
+        <section>
+            <h2>Update Existing User</h2>
+            <form action="/users/update" method="post">
+                <fieldset>
+                    <legend>Update User</legend>
+                    <label for="userID">User ID</label>
+                    <input type="number" id="userID" name="userID"><br><br>
+
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username"><br><br>
+
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email"><br><br>
+
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password"><br><br>
+
+                    <label for="remainingCredits">Remaining Credits</label>
+                    <input type="number" id="remainingCredits" name="remainingCredits"><br><br>
+
+                    <label for="organization">Organization</label>
+                    <select name="organization">
+                        <option value="0">&nbsp;</option>
+                        <option value="1">Combustion Research Lab</option>
+                        <option value="2">Energy and Sustainability Lab</option>
+                        <option value="3">RRC AI Club</option>
+                    </select>
+
+                    <label for="subscription">Subscription</label>
+                    <select name="subscription">
+                        <option value="0">&nbsp;</option>
+                        <option value="1">CRL</option>
+                        <option value="2">ESL</option>
+                        <option value="3">RAC</option>
+                        <option value="4">barnes-indv</option>
+                    </select>
+                </fieldset>
+                <br>
+                <input type="submit" value="Update User">
+            </form>
+        </section>
+        <section>
+            <h2>Delete a User</h2>
+            <form action="/users/delete" method="post">
+                <fieldset>
+                    <legend>Delete User</legend>
+                    <label for="userID">User ID</label>
+                    <input type="number" id="userID" name="userID"><br><br>
+                </fieldset>
+                <br>
+                <input type="submit" value="Delete User">
+            </form>
+        </section>
+    </main>
+    <footer>
+    </footer>
+</body>
+</html>

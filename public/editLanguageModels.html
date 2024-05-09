@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Edit Language Model</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+    <header>
+        <h1>Edit Language Model</h1>
+    </header>
+    <nav>
+        <a href="organizations.html">Organizations</a> |
+        <a href="users.html">Users</a> |
+        <a href="subscriptions.html">Subscriptions</a> |
+        <a href="languageModels.html">Language Models</a> |
+        <a href="subscriptionsLanguageModels.html">Subscriptions - Language Models</a>
+    </nav>
+    <main>
+        <section>
+            <h2>Add a New Language Model</h2>
+            <form action="/languageModel" method="post">
+                <fieldset>
+                    <legend>Language Model Details:</legend>
+                    <label for="modelName">Model Name</label>
+                    <input type="text" id="modelName" name="modelName"><br><br>
+
+                    <label for="modelDescription">Description</label>
+                    <input type="text" id="modelDescription" name="modelDescription"><br><br>
+
+                    <label for="creditsPerToken">Credits per Token</label>
+                    <input type="number" step="0.01" id="creditsPerToken" name="creditsPerToken">
+                </fieldset>
+                <br>
+                <input type="submit" value="Add Language Model">
+            </form>
+        </section>
+        <section>
+            <h2>Update Existing Language Model</h2>
+            <form action="/languageModel/update" method="post">
+                <fieldset>
+                    <legend>Update Language Model</legend>
+                    <label for="languageModelID">Language Model ID</label>
+                    <input type="number" id="languageModelID" name="languageModelID"><br><br>
+
+                    <label for="modelName">Model Name</label>
+                    <input type="text" id="modelName" name="modelName"><br><br>
+
+                    <label for="modelDescription">Description</label>
+                    <input type="text" id="modelDescription" name="modelDescription"><br><br>
+
+                    <label for="creditsPerToken">Credits per Token</label>
+                    <input type="number" step="0.01" id="creditsPerToken" name="creditsPerToken">
+                </fieldset>
+                <br>
+                <input type="submit" value="Update Language Model">
+            </form>
+        </section>
+        <section>
+            <h2>Delete a Language Model</h2>
+            <form action="/languageModel/delete" method="post">
+                <fieldset>
+                    <legend>Delete Language Model</legend>
+                    <label for="languageModelID">Language Model ID</label>
+                    <input type="number" id="languageModelID" name="languageModelID"><br><br>
+                </fieldset>
+                <br>
+                <input type="submit" value="Delete Language Model">
+            </form>
+        </section>
+    </main>
+    <footer>
+    </footer>
+</body>
+</html>
