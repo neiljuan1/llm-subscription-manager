@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>LLM Subscription Manager</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+    <header>
+        <h1>LLM Subscription Manager</h1>
+    </header>
+    <nav>
+        <a href="organizations.html">Organizations</a> |
+        <a href="users.html">Users</a> |
+        <a href="subscriptions.html">Subscriptions</a> | 
+        <a href="languageModels.html">Language Models</a> | 
+        <a href="subscriptionLanguageModels.html">Subscriptions - Language Models</a>
+    </nav>
+    <main>
+        <section>
+            <h2>Browse Subscriptions</h2>
+            <a href="createSubscription.html">Add Subscription</a>
+            <table>
+                <thead>
+                    <tr>
+                        <th>subscriptionID</th>
+                        <th>subscriptionName</th>
+                        <th>startDate</th>
+                        <th>costPerMonth</th>
+                        <th>creditsGivenPerMonth</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>CRL</td>
+                        <td>2023-12-27</td>
+                        <td>250</td>
+                        <td>1000000</td>
+                        <td><a href="updateSubscription.html">edit</a></td>
+                        <td><a href="#">delete</a></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>ESL</td>
+                        <td>2024-03-01</td>
+                        <td>1000</td>
+                        <td>200000000</td>
+                        <td><a href="updateSubscription.html">edit</a></td>
+                        <td><a href="#">delete</a></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>RAC</td>
+                        <td>2024-04-01</td>
+                        <td>5000</td>
+                        <td>500000000</td>
+                        <td><a href="updateSubscription.html">edit</a></td>
+                        <td><a href="#">delete</a></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>barnes-indv</td>
+                        <td>2024-01-14</td>
+                        <td>40</td>
+                        <td>5000</td>
+                        <td><a href="updateSubscription.html">edit</a></td>
+                        <td><a href="#">delete</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section>
+            <h2>Browse Users</h2>
+            <a href="createUser.html">Add User</a>
+            <table>
+                <thead>
+                    <tr>
+                        <th>userID</th>
+                        <th>username</th>
+                        <th>email</th>
+                        <th>password</th>
+                        <th>remainingCredits</th>
+                        <th>organizationID</th>
+                        <th>subscriptionID</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>johnSmith</td>
+                        <td>jsmith@gmail.com</td>
+                        <td>eKv98W%p</td>
+                        <td>500000</td>
+                        <td>1</td>
+                        <td></td>
+                        <td><a href="updateUser.html">edit</a></td>
+                        <td><a href="#">delete</a></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>kyleLowry</td>
+                        <td>klowry@outlook.com</td>
+                        <td>mJ%63#d</td>
+                        <td>500000</td>
+                        <td>1</td>
+                        <td></td>
+                        <td><a href="updateUser.html">edit</a></td>
+                        <td><a href="#">delete</a></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>kelvinLi</td>
+                        <td>kli@gmail.com</td>
+                        <td>We}7up.></td>
+                        <td>1000000</td>
+                        <td>2</td>
+                        <td></td>
+                        <td><a href="updateUser.html">edit</a></td>
+                        <td><a href="#">delete</a></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>aliZahir</td>
+                        <td>azahir@gmail.com</td>
+                        <td>Gx(-,6;&</td>
+                        <td>14000</td>
+                        <td>3</td>
+                        <td></td>
+                        <td><a href="updateUser.html">edit</a></td>
+                        <td><a href="#">delete</a></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>scootBarnes</td>
+                        <td>sbarnes@torontomu.ca</td>
+                        <td>tor!2204</td>
+                        <td>5000</td>
+                        <td></td>
+                        <td>4</td>
+                        <td><a href="updateUser.html">edit</a></td>
+                        <td><a href="#">delete</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section>
+            <h2>Browse Organizations</h2>
+            <a href="createOrganization.html">Add Organization</a>
+            <table>
+                <thead>
+                    <tr>
+                        <th>organizationID</th>
+                        <th>organizationName</th>
+                        <th>organizationDescription</th>
+                        <th>subscriptionID</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Combustion Research Lab</td>
+                        <td>Combustion, particulate emissions, nanomaterial synthesis</td>
+                        <td>1</td>
+                        <td><a href="updateOrganization.html">edit</a></td>
+                        <td><a href="#">delete</a></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Energy and Sustainability Lab</td>
+                        <td>Research lab in the Engineering department focused on green energy</td>
+                        <td>2</td>
+                        <td><a href="updateOrganization.html">edit</a></td>
+                        <td><a href="#">delete</a></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>RRC AI Club</td>
+                        <td>Student organization focused on Artificial Intelligence</td>
+                        <td>3</td>
+                        <td><a href="updateOrganization.html">edit</a></td>
+                        <td><a href="#">delete</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <footer>
+
+    </footer>
+    
+</body>
+</html>
