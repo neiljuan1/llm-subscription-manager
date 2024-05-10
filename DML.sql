@@ -45,7 +45,7 @@ SELECT u.userName, u.email, u.password, u.remainingCredits, o.organizationName, 
 FROM Users as u
 LEFT JOIN Organizations as o ON u.organizationID = o.organizationID
 LEFT JOIN Subscriptions as s ON u.subscriptionID = s.subscriptionID or o.subscriptionID = s.subscriptionID
-WHERE userID = 3; -- userID = :userID
+WHERE userID = :userID; -- example - :userID = 3
 
 -- Populate Drop down user IDs/names for selection/deletion/updates
 SELECT userID FROM Users;
@@ -81,7 +81,7 @@ SELECT organizationID, organizationName FROM Organizations;
 SELECT o.organizationName, o.organizationDescription, s.subscriptionName
 FROM Organizations as o
 INNER JOIN Subscriptions as s ON o.subscriptionID = s.subscriptionID
-WHERE organizationID = 3; -- organizationID = :organizationID;
+WHERE organizationID = :organizationID; -- example - :organizationID = 3;
 
 
 -- ----------------- Subscriptions
@@ -112,7 +112,7 @@ SELECT subscriptionID, subscriptionName FROM Subscriptions;
 -- Populate Subscription Update Form example, when selecting edit on the row. Will send subscriptionID
 SELECT subscriptionName, startDate, costPerMonth, creditsGivenPerMonth
 FROM Subscriptions
-WHERE subscriptionID = 2;  -- subscriptionID = :subscriptionID;
+WHERE subscriptionID = :subscriptionID;  -- example - :subscriptionID = 2;
 
 
 -- ----------------- Language Models
@@ -142,7 +142,7 @@ SELECT languageModelID, languageModelName FROM LanguageModels;
 -- Populate Language Model Update Form example, when selecting edit on the row. Will send languageModelID
 SELECT languageModelName, languageModelDescription, creditsPerToken
 FROM LanguageModels
-WHERE languageModelID = 4; -- languageModelID = :languageModelID
+WHERE languageModelID = :languageModelID; -- example - :languageModelID = 4
 
 
 -- ----------------- Subscription Language Models Intersection table (M:N)
@@ -171,4 +171,4 @@ SELECT s.subscriptionID, s.subscriptionName, lm.languageModelID, lm.languageMode
 FROM Subscriptions as s
 INNER JOIN SubscriptionLanguageModels as slm ON s.subscriptionID = slm.subscriptionID
 INNER JOIN LanguageModels as lm ON slm.languageModelID = lm.languageModelID
-WHERE slm.subscriptionLanguageModelID = 1; -- subscriptionLanguageModelID = :subscriptionLanguageModelID
+WHERE slm.subscriptionLanguageModelID = :subscriptionLanguageModelID; -- example - :subscriptionLanguageModelID = 1
