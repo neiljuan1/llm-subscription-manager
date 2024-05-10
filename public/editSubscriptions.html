@@ -13,16 +13,17 @@
         <h1>Edit Subscription</h1>
     </header>
     <nav>
+        <a href="index.html">Home</a> |
         <a href="organizations.html">Organizations</a> |
         <a href="users.html">Users</a> |
         <a href="subscriptions.html">Subscriptions</a> |
         <a href="languageModels.html">Language Models</a> |
-        <a href="subscriptionsLanguageModels.html">Subscriptions - Language Models</a>
+        <a href="subscriptionLanguageModels.html">Subscriptions - Language Models</a>
     </nav>
     <main>
         <section>
             <h2>Add a New Subscription</h2>
-            <form action="/subscription" method="post">
+            <form action="/subscriptions" method="post">
                 <fieldset>
                     <legend>Subscription Details:</legend>
                     <label for="subscriptionName">Name</label>
@@ -43,7 +44,7 @@
         </section>
         <section>
             <h2>Update Existing Subscription</h2>
-            <form action="/subscription/update" method="post">
+            <form action="/subscriptions/update" method="post">
                 <fieldset>
                     <legend>Update Subscription</legend>
                     <label for="subscriptionID">Subscription ID</label>
@@ -67,7 +68,7 @@
         </section>
         <section>
             <h2>Delete a Subscription</h2>
-            <form action="/subscription/delete" method="post">
+            <form action="/subscriptions/delete" method="post">
                 <fieldset>
                     <legend>Delete Subscription</legend>
                     <label for="subscriptionID">Subscription ID</label>

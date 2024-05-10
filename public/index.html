@@ -13,292 +13,118 @@
         <h1>LLM Subscription Manager</h1>
     </header>
     <nav>
+        <a href="index.html">Home</a> |
         <a href="organizations.html">Organizations</a> |
         <a href="users.html">Users</a> |
         <a href="subscriptions.html">Subscriptions</a> | 
         <a href="languageModels.html">Language Models</a> | 
-        <a href="subscriptionsLanguageModels.html">Subscriptions - Language Models</a>
+        <a href="subscriptionLanguageModels.html">Subscriptions - Language Models</a>
     </nav>
     <main>
         <section>
-            <h2>Browse Subscriptions</h2>
-            <a href="createSubscription.html">Add Subscription</a>
+            <h2>Subscriptions by User</h2>
             <table>
                 <thead>
                     <tr>
-                        <th>subscriptionID</th>
-                        <th>subscriptionName</th>
-                        <th>startDate</th>
-                        <th>costPerMonth</th>
-                        <th>creditsGivenPerMonth</th>
-                        <th></th>
-                        <th></th>
+                        <th>User</th>
+                        <th>Organization</th>
+                        <th>Subscription</th>
+                        <th>Start Date</th>
+                        <th>Monthly Cost</th>
+                        <th>Credits Given per Month</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>1</td>
+                        <td>johnSmith</td>
+                        <td>Combustion Research Lab</td>
                         <td>CRL</td>
                         <td>2023-12-27</td>
-                        <td>250</td>
-                        <td>1000000</td>
-                        <td><a href="updateSubscription.html">edit</a></td>
-                        <td><a href="#">delete</a></td>
+                        <td>250.00</td>
+                        <td>1000000.00</td>
                     </tr>
                     <tr>
-                        <td>2</td>
+                        <td>kyleLowry</td>
+                        <td>Combustion Research Lab</td>
+                        <td>CRL</td>
+                        <td>2023-12-27</td>
+                        <td>250.00</td>
+                        <td>1000000.00</td>
+                    </tr>
+                    <tr>
+                        <td>kelvinLi</td>
+                        <td>Energy and Sustainability Lab</td>
                         <td>ESL</td>
                         <td>2024-03-01</td>
-                        <td>1000</td>
-                        <td>200000000</td>
-                        <td><a href="updateSubscription.html">edit</a></td>
-                        <td><a href="#">delete</a></td>
+                        <td>1000.00</td>
+                        <td>200000000.00</td>
                     </tr>
                     <tr>
-                        <td>3</td>
+                        <td>aliZahir</td>
+                        <td>RRC AI Club</td>
                         <td>RAC</td>
                         <td>2024-04-01</td>
-                        <td>5000</td>
-                        <td>500000000</td>
-                        <td><a href="updateSubscription.html">edit</a></td>
-                        <td><a href="#">delete</a></td>
+                        <td>5000.00</td>
+                        <td>500000000.00</td>
                     </tr>
                     <tr>
-                        <td>4</td>
+                        <td>scootBarnes</td>
+                        <td></td>
                         <td>barnes-indv</td>
                         <td>2024-01-14</td>
-                        <td>40</td>
-                        <td>5000</td>
-                        <td><a href="updateSubscription.html">edit</a></td>
-                        <td><a href="#">delete</a></td>
+                        <td>40.00</td>
+                        <td>5000.00</td>
                     </tr>
                 </tbody>
             </table>
         </section>
         <section>
-            <h2>Browse Users</h2>
-            <a href="createUser.html">Add User</a>
+            <h2>Models by Subscription</h2>
             <table>
                 <thead>
                     <tr>
-                        <th>userID</th>
-                        <th>username</th>
-                        <th>email</th>
-                        <th>password</th>
-                        <th>remainingCredits</th>
-                        <th>organizationID</th>
-                        <th>subscriptionID</th>
-                        <th></th>
-                        <th></th>
+                        <th>Subscription</th>
+                        <th>Credits Given per Month</th>
+                        <th>Model Name</th>
+                        <th>Model Description</th>
+                        <th>Credits per Token</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>1</td>
-                        <td>johnSmith</td>
-                        <td>jsmith@gmail.com</td>
-                        <td>eKv98W%p</td>
-                        <td>500000</td>
-                        <td>1</td>
-                        <td></td>
-                        <td><a href="updateUser.html">edit</a></td>
-                        <td><a href="#">delete</a></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>kyleLowry</td>
-                        <td>klowry@outlook.com</td>
-                        <td>mJ%63#d</td>
-                        <td>500000</td>
-                        <td>1</td>
-                        <td></td>
-                        <td><a href="updateUser.html">edit</a></td>
-                        <td><a href="#">delete</a></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>kelvinLi</td>
-                        <td>kli@gmail.com</td>
-                        <td>We}7up.></td>
-                        <td>1000000</td>
-                        <td>2</td>
-                        <td></td>
-                        <td><a href="updateUser.html">edit</a></td>
-                        <td><a href="#">delete</a></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>aliZahir</td>
-                        <td>azahir@gmail.com</td>
-                        <td>Gx(-,6;&</td>
-                        <td>14000</td>
-                        <td>3</td>
-                        <td></td>
-                        <td><a href="updateUser.html">edit</a></td>
-                        <td><a href="#">delete</a></td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>scootBarnes</td>
-                        <td>sbarnes@torontomu.ca</td>
-                        <td>tor!2204</td>
-                        <td>5000</td>
-                        <td></td>
-                        <td>4</td>
-                        <td><a href="updateUser.html">edit</a></td>
-                        <td><a href="#">delete</a></td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-        <section>
-            <h2>Browse Organizations</h2>
-            <a href="createOrganization.html">Add Organization</a>
-            <table>
-                <thead>
-                    <tr>
-                        <th>organizationID</th>
-                        <th>organizationName</th>
-                        <th>organizationDescription</th>
-                        <th>subscriptionID</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Combustion Research Lab</td>
-                        <td>Combustion, particulate emissions, nanomaterial synthesis</td>
-                        <td>1</td>
-                        <td><a href="updateOrganization.html">edit</a></td>
-                        <td><a href="#">delete</a></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Energy and Sustainability Lab</td>
-                        <td>Research lab in the Engineering department focused on green energy</td>
-                        <td>2</td>
-                        <td><a href="updateOrganization.html">edit</a></td>
-                        <td><a href="#">delete</a></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>RRC AI Club</td>
-                        <td>Student organization focused on Artificial Intelligence</td>
-                        <td>3</td>
-                        <td><a href="updateOrganization.html">edit</a></td>
-                        <td><a href="#">delete</a></td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-        <section>
-            <h2>Browse Language Models</h2>
-            <a href="createLanguageModel.html">Add Language Model</a>
-            <table>
-                <thead>
-                    <tr>
-                        <th>languageModelID</th>
-                        <th>modelName</th>
-                        <th>modelDescription</th>
-                        <th>creditsPerToken</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>gpt-4-turbo</td>
-                        <td>General knowledge and domain expertise with vision model</td>
-                        <td>3</td>
-                        <td><a href="updateLanguageModel.html">edit</a></td>
-                        <td><a href="#">delete</a></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
+                        <td>CRL</td>
+                        <td>1000000.00</td>
                         <td>gpt-3.5 turbo</td>
                         <td>Cost effective, general knowledge</td>
-                        <td>1</td>
-                        <td><a href="updateLanguageModel.html">edit</a></td>
-                        <td><a href="#">delete</a></td>
+                        <td>1.00</td>
                     </tr>
                     <tr>
-                        <td>3</td>
-                        <td>DALLE 3</td>
-                        <td>Generates images and art</td>
-                        <td>1</td>
-                        <td><a href="updateLanguageModel.html">edit</a></td>
-                        <td><a href="#">delete</a></td>
+                        <td>ESL</td>
+                        <td>200000000.00</td>
+                        <td>gpt-4-turbo</td>
+                        <td>General knowledge and domain expertise with vision model</td>
+                        <td>3.00</td>
                     </tr>
                     <tr>
-                        <td>4</td>
-                        <td>tts</td>
-                        <td>Text to speech converter</td>
-                        <td>10</td>
-                        <td><a href="updateLanguageModel.html">edit</a></td>
-                        <td><a href="#">delete</a></td>
+                        <td>RAC</td>
+                        <td>500000000.00</td>
+                        <td>gpt-4-turbo</td>
+                        <td>General knowledge and domain expertise with vision model</td>
+                        <td>3.00</td>
                     </tr>
                     <tr>
-                        <td>5</td>
+                        <td>RAC</td>
+                        <td>500000000.00</td>
                         <td>whisper</td>
                         <td>Speech to text converter</td>
-                        <td>10</td>
-                        <td><a href="updateLanguageModel.html">edit</a></td>
-                        <td><a href="#">delete</a></td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-        <section>
-            <h2>Browse Subscriptions - Language Models</h2>
-            <a href="createSubscriptionLanguageModel.html">Add Subscription - Language Model</a>
-            <table>
-                <thead>
-                    <tr>
-                        <th>subscriptionLanguageModelID</th>
-                        <th>subscriptionID</th>
-                        <th>languageModelID</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2</td>
-                        <td><a href="updateSubscriptionLanguageModel.html">edit</a></td>
-                        <td><a href="#">delete</a></td>
+                        <td>10.00</td>
                     </tr>
                     <tr>
-                        <td>2</td>
-                        <td>2</td>
-                        <td>1</td>
-                        <td><a href="updateSubscriptionLanguageModel.html">edit</a></td>
-                        <td><a href="#">delete</a></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>2</td>
-                        <td>4</td>
-                        <td><a href="updateSubscriptionLanguageModel.html">edit</a></td>
-                        <td><a href="#">delete</a></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>3</td>
-                        <td>1</td>
-                        <td><a href="updateSubscriptionLanguageModel.html">edit</a></td>
-                        <td><a href="#">delete</a></td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>3</td>
-                        <td>5</td>
-                        <td><a href="updateSubscriptionLanguageModel.html">edit</a></td>
-                        <td><a href="#">delete</a></td>
+                        <td>barnes-indv</td>
+                        <td>5000.00</td>
+                        <td>tts</td>
+                        <td>Text to speech converter</td>
+                        <td>10.00</td>
                     </tr>
                 </tbody>
             </table>

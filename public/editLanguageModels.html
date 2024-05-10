@@ -13,16 +13,17 @@
         <h1>Edit Language Model</h1>
     </header>
     <nav>
+        <a href="index.html">Home</a> |
         <a href="organizations.html">Organizations</a> |
         <a href="users.html">Users</a> |
         <a href="subscriptions.html">Subscriptions</a> |
         <a href="languageModels.html">Language Models</a> |
-        <a href="subscriptionsLanguageModels.html">Subscriptions - Language Models</a>
+        <a href="subscriptionLanguageModels.html">Subscriptions - Language Models</a>
     </nav>
     <main>
         <section>
             <h2>Add a New Language Model</h2>
-            <form action="/languageModel" method="post">
+            <form action="/languageModels" method="post">
                 <fieldset>
                     <legend>Language Model Details:</legend>
                     <label for="modelName">Model Name</label>
@@ -40,7 +41,7 @@
         </section>
         <section>
             <h2>Update Existing Language Model</h2>
-            <form action="/languageModel/update" method="post">
+            <form action="/languageModels/update" method="post">
                 <fieldset>
                     <legend>Update Language Model</legend>
                     <label for="languageModelID">Language Model ID</label>
@@ -61,7 +62,7 @@
         </section>
         <section>
             <h2>Delete a Language Model</h2>
-            <form action="/languageModel/delete" method="post">
+            <form action="/languageModels/delete" method="post">
                 <fieldset>
                     <legend>Delete Language Model</legend>
                     <label for="languageModelID">Language Model ID</label>

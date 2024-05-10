@@ -13,16 +13,17 @@
         <h1>Users</h1>
     </header>
     <nav>
+        <a href="index.html">Home</a> |
         <a href="organizations.html">Organizations</a> |
         <a href="users.html">Users</a> |
         <a href="subscriptions.html">Subscriptions</a> | 
         <a href="languageModels.html">Language Models</a> | 
-        <a href="subscriptionsLanguageModels.html">Subscriptions - Language Models</a>
+        <a href="subscriptionLanguageModels.html">Subscriptions - Language Models</a>
     </nav>
     <main>
         <section>
-            <h2>Add a New User</h2>
-            <form action="/users" method="post">
+            <h2>Update User</h2>
+            <form action="/users/update" method="post">
                 <fieldset>
                     <legend>User Details:</legend>
                     <label for="username">Username</label>
@@ -54,6 +55,8 @@
                         <option value="4">barnes-indv</option>
                     </select>
                 </fieldset>
+                <br>
+                <input type="submit" value="Update User">
             </form>
         </section>
     </main>
