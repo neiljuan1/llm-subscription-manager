@@ -60,6 +60,24 @@ CREATE TABLE SubscriptionLanguageModels (
         	ON DELETE CASCADE
 );
 
+
+-- Insert data into Subscriptions
+INSERT INTO Subscriptions (subscriptionName, startDate, costPerMonth, creditsGivenPerMonth) VALUES
+("CRL", "2023-12-27", 250, 1000000),
+("ESL", "2024-03-01", 1000, 200000000),
+("RAC", "2024-04-01", 5000, 500000000),
+("barnes-indv", "2024-01-14", 40, 5000);
+
+
+-- Insert data into LanguageModels
+INSERT INTO LanguageModels (languageModelName, languageModelDescription, creditsPerToken) VALUES
+("gpt-4-turbo", "General knowledge and domain epertise with vision model", 3),
+("gpt-3.5 turbo", "Cost effective, general knowledge", 1),
+("DALLE 3", "Generates images and art", 1),
+("tts", "Text to speech converter", 10),
+("whisper", "Speech to text converter", 10);
+
+
 -- Insert data into Organizations
 INSERT INTO Organizations (organizationID, organizationName, organizationDescription, subscriptionID)
 VALUES
@@ -77,21 +95,6 @@ VALUES
     (4, 'aliZahir', 'azahir@gmail.com', 'Gx(-,6;&', 14000, 3, NULL),
     (5, 'scootBarnes', 'sbarnes@torontomu.ca', 'tor!2204', 5000, NULL, 4);
 
--- Insert data into Subscriptions
-INSERT INTO Subscriptions (subscriptionName, startDate, costPerMonth, creditsGivenPerMonth) VALUES
-("CRL", "2023-12-27", 250, 1000000),
-("ESL", "2024-03-01", 1000, 200000000),
-("RAC", "2024-04-01", 5000, 500000000),
-("barnes-indv", "2024-01-14", 40, 5000);
-
-
--- Insert data into LanguageModels
-INSERT INTO LanguageModels (languageModelName, languageModelDescription, creditsPerToken) VALUES
-("gpt-4-turbo", "General knowledge and domain epertise with vision model", 3),
-("gpt-3.5 turbo", "Cost effective, general knowledge", 1),
-("DALLE 3", "Generates images and art", 1),
-("tts", "Text to speech converter", 10),
-("whisper", "Speech to text converter", 10);
 
 -- Insert data into bridge
 INSERT INTO SubscriptionLanguageModels (subscriptionID, languagemodelID) VALUES 

@@ -76,7 +76,12 @@
                 <fieldset>
                     <legend>Delete Organization</legend>
                     <label for="organizationID">Organization ID</label>
-                    <input type="number" id="organizationID" name="organizationID"><br><br>
+                    <select name="organizationID">
+                        <option value="0">&nbsp;</option>
+                        <option value="1">1. Combustion Research Lab</option>
+                        <option value="2" selected>2. Energy and Sustainability Lab</option>
+                        <option value="3">3. RRC AI Club</option>
+                    </select>
                 </fieldset>
                 <br>
                 <input type="submit" value="Delete Organization">

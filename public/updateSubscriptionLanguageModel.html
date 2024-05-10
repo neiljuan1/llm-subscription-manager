@@ -26,14 +26,25 @@
             <form action="/subscriptionLanguageModel/update" method="post">
                 <fieldset>
                     <legend>Subscription - Language Model Details</legend>
-                    <label for="subscriptionLanguageModelID">Subscription - Language Model ID</label>
-                    <input type="number" id="subscriptionLanguageModelID" name="subscriptionLanguageModelID" value="1"><br><br>
 
-                    <label for="subscriptionID">Subscription ID</label>
-                    <input type="number" id="subscriptionID" name="subscriptionID" value="1"><br><br>
+                    <label for="subscription">Subscription ID</label>
+                    <select id="subscription" name="subscriptionID">
+                        <option value="0">&nbsp;</option>
+                        <option value="1" selected>1. CRL</option>
+                        <option value="2">2. ESL</option>
+                        <option value="3">3. RAC</option>
+                        <option value="4">4. barnes-indv</option>
+                    </select>
 
                     <label for="languageModelID">Language Model ID</label>
-                    <input type="number" id="languageModelID" name="languageModelID" value="2"><br><br>
+                    <select id="languageModel" name="languageModelID">
+                        <option value="0">&nbsp;</option>
+                        <option value="1">1. gpt-4-turbo</option>
+                        <option value="2" selected>2. gpt-3.5 turbo</option>
+                        <option value="3">3. DALLE 3</option>
+                        <option value="4">4. tts</option>
+                        <option value="5">5. whisper</option>
+                    </select>
                 </fieldset>
                 <br>
                 <input type="submit" value="Update Subscription - Language Model">
