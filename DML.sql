@@ -149,6 +149,12 @@ WHERE languageModelID = :languageModelID; -- example - :languageModelID = 4
 -- Subscription Language Models Table
 SELECT * FROM SubscriptionLanguageModels;
 
+-- Subscription Language Models Table with names
+SELECT slm.subscriptionLanguageModelID, s.subscriptionID, lm.languageModelID, s.subscriptionName as "Subscription", lm.languageModelName as "Model Name"
+FROM Subscriptions as s
+INNER JOIN SubscriptionLanguageModels as slm ON s.subscriptionID = slm.subscriptionID
+INNER JOIN LanguageModels as lm ON slm.languageModelID = lm.languageModelID;
+
 -- Create new Subscription Language Model. Values starting with colon (:) are variables from request.
 INSERT INTO SubscriptionLanguageModels (subscriptionLanguageModelID, subscriptionID, languageModelID)
 VALUES

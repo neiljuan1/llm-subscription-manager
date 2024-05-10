@@ -24,7 +24,7 @@ CREATE TABLE Organizations (
     organizationName VARCHAR(100) NOT NULL,
     organizationDescription VARCHAR(100) NOT NULL,
     PRIMARY KEY (organizationID),
-    FOREIGN KEY (subscriptionID) REFERENCES Subscriptions(subscriptionID)
+    FOREIGN KEY (subscriptionID) REFERENCES Subscriptions(subscriptionID) ON DELETE CASCADE
 );
 
 CREATE TABLE Users (
@@ -36,9 +36,10 @@ CREATE TABLE Users (
     password VARCHAR(100) NOT NULL,
     remainingCredits decimal(12,2) UNSIGNED NOT NULL,
     PRIMARY KEY (userID),
-    FOREIGN KEY (organizationID) REFERENCES Organizations(organizationID),
+    FOREIGN KEY (organizationID) REFERENCES Organizations(organizationID)
+        ON DELETE CASCADE,
     FOREIGN KEY (subscriptionID) REFERENCES Subscriptions(subscriptionID)
-    ON DELETE CASCADE
+        ON DELETE CASCADE
 );
 
 CREATE TABLE LanguageModels(
