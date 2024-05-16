@@ -21,7 +21,7 @@
         <a href="subscriptionLanguageModels.html">Subscriptions - Language Models</a>
     </nav>
     <main>
-        <section>
+        <section id="insert">
             <h2>Add a New Language Model</h2>
             <form action="/languageModels" method="post">
                 <fieldset>
@@ -39,7 +39,7 @@
                 <input type="submit" value="Add Language Model">
             </form>
         </section>
-        <section>
+        <section id="update">
             <h2>Update Existing Language Model</h2>
             <form action="/languageModels/update" method="post">
                 <fieldset>
@@ -50,24 +50,25 @@
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
-                        <option value="4">4</option>
+                        <option value="4" selected>4</option>
                         <option value="5">5</option>
                     </select><br><br>
 
+                    <legend>Update Language Model</legend>
                     <label for="modelName">Model Name</label>
-                    <input type="text" id="modelName" name="modelName"><br><br>
+                    <input type="text" id="modelName" name="modelName" value="tts"><br><br>
 
                     <label for="modelDescription">Description</label>
-                    <input type="text" id="modelDescription" name="modelDescription"><br><br>
+                    <input type="text" id="modelDescription" name="modelDescription" value="Text to speech converter"><br><br>
 
                     <label for="creditsPerToken">Credits per Token</label>
-                    <input type="number" step="0.01" id="creditsPerToken" name="creditsPerToken">
+                    <input type="number" step="0.01" id="creditsPerToken" name="creditsPerToken" value="10.00">
                 </fieldset>
                 <br>
                 <input type="submit" value="Update Language Model">
             </form>
         </section>
-        <section>
+        <section id="delete">
             <h2>Delete a Language Model</h2>
             <form action="/languageModels/delete" method="post">
                 <fieldset>

@@ -21,7 +21,7 @@
         <a href="subscriptionLanguageModels.html">Subscriptions - Language Models</a>
     </nav>
     <main>
-        <section>
+        <section id="insert">
             <h2>Add a New User</h2>
             <form action="/users" method="post">
                 <fieldset>
@@ -59,46 +59,36 @@
                 <input type="submit" value="Add User">
             </form>
         </section>
-        <section>
+        <section id="update">
             <h2>Update Existing User</h2>
             <form action="/users/update" method="post">
                 <fieldset>
-                    <legend>Update User</legend>
-                    <label for="userID">User ID</label>
-                    <select id="userID" name="userID">
-                        <option value="0">&nbsp;</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select><br><br>
-
+                    <legend>User Details:</legend>
                     <label for="username">Username</label>
-                    <input type="text" id="username" name="username"><br><br>
+                    <input type="text" id="username" name="username" value="kelvinLi"><br><br>
 
                     <label for="email">Email</label>
-                    <input type="text" id="email" name="email"><br><br>
+                    <input type="text" id="username" name="email" value="kli@gmail.com">
 
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password"><br><br>
+                    <input type="text" id="username" name="password" value="We}7up.>"><br><br>
 
                     <label for="remainingCredits">Remaining Credits</label>
-                    <input type="number" id="remainingCredits" name="remainingCredits"><br><br>
-
+                    <input type="number" id="remainingCredits" name="remainingCredits" value="1000000"><br><br>
+                    
                     <label for="organization">Organization</label>
-                    <select name="organization">
+                    <select id="organization" name="organizationID">
                         <option value="0">&nbsp;</option>
                         <option value="1">Combustion Research Lab</option>
-                        <option value="2">Energy and Sustainability Lab</option>
+                        <option value="2" selected>Energy and Sustainability Lab</option>
                         <option value="3">RRC AI Club</option>
                     </select>
 
                     <label for="subscription">Subscription</label>
-                    <select name="subscription">
+                    <select id="subscription" name="subscriptionID">
                         <option value="0">&nbsp;</option>
                         <option value="1">CRL</option>
-                        <option value="2">ESL</option>
+                        <option value="2" selected>ESL</option>
                         <option value="3">RAC</option>
                         <option value="4">barnes-indv</option>
                     </select>
@@ -107,13 +97,20 @@
                 <input type="submit" value="Update User">
             </form>
         </section>
-        <section>
+        <section id="delete">
             <h2>Delete a User</h2>
             <form action="/users/delete" method="post">
                 <fieldset>
                     <legend>Delete User</legend>
                     <label for="userID">User ID</label>
-                    <input type="number" id="userID" name="userID"><br><br>
+                    <select id="userID" name="userID">
+                        <option value="0">&nbsp;</option>
+                        <option value="1" selected>1. johnSmith</option>
+                        <option value="2">2. kyleLowry</option>
+                        <option value="3">3. kelvinLi</option>
+                        <option value="4">4. aliZahir</option>
+                        <option value="5">5. scootBarnes</option>
+                    </select>
                 </fieldset>
                 <br>
                 <input type="submit" value="Delete User">
