@@ -16,6 +16,14 @@ FROM Subscriptions as s
 INNER JOIN SubscriptionLanguageModels as slm ON s.subscriptionID = slm.subscriptionID
 INNER JOIN LanguageModels as lm ON slm.languageModelID = lm.languageModelID;
 
+-- View for Users' Models
+SELECT u.userName, lm.languageModelName, s.subscriptionName
+FROM SubscriptionLanguageModels as slm
+INNER JOIN LanguageModels as lm ON slm.subscriptionLanguageModelID = lm.languageModelID
+INNER JOIN Subscriptions as s ON slm.subscriptionID = s.subscriptionID
+LEFT OUTER JOIN Organizations as o ON s.subscriptionID = o.subscriptionID
+INNER JOIN Users as u ON s.subscriptionID = u.subscriptionID OR o.organizationID = u.organizationID
+WHERE u.userName = :userName; -- Example username aliZahir
 
 -- ----------------- Users
 -- Users Table
@@ -52,6 +60,9 @@ SELECT userID FROM Users;
 SELECT userName FROM Users;
 SELECT userID, userName FROM Users;
 
+SELECT CONCAT(userID, '. ', userName)
+FROM Users
+WHERE userID = :userID;
 
 -- ----------------- Organizations
 -- Organizations Table
@@ -76,6 +87,10 @@ DELETE FROM Organizations WHERE Organizations.organizationID = :organizationID;
 SELECT organizationID FROM Organizations;
 SELECT organizationName FROM Organizations;
 SELECT organizationID, organizationName FROM Organizations;
+
+SELECT CONCAT(organizationID, '. ', organizationName)
+FROM Organizations
+WHERE organizationID = :organizationID;
 
 -- Populate Organization Update Form example, when selecting edit on the row. Will send organizationID
 SELECT o.organizationName, o.organizationDescription, s.subscriptionName
@@ -108,6 +123,10 @@ DELETE FROM Subscriptions WHERE Subscriptions.subscriptionID = :subscriptionID;
 SELECT subscriptionID FROM Subscriptions;
 SELECT subscriptionName FROM Subscriptions;
 SELECT subscriptionID, subscriptionName FROM Subscriptions;
+
+SELECT CONCAT(subscriptionID, '. ', subscriptionName)
+FROM Subscriptions
+WHERE subscriptionID = :subscriptionID;
 
 -- Populate Subscription Update Form example, when selecting edit on the row. Will send subscriptionID
 SELECT subscriptionName, startDate, costPerMonth, creditsGivenPerMonth
@@ -144,6 +163,9 @@ SELECT languageModelName, languageModelDescription, creditsPerToken
 FROM LanguageModels
 WHERE languageModelID = :languageModelID; -- example - :languageModelID = 4
 
+SELECT CONCAT(languageModelID, '. ', languageModelName)
+FROM LanguageModels
+WHERE languageModelID = :languageModelID;
 
 -- ----------------- Subscription Language Models Intersection table (M:N)
 -- Subscription Language Models Table

@@ -6,7 +6,15 @@
     <title>LLM Subscription Manager</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    <script src='main.js'></script>
+    <script language="JavaScript">
+        function showModels(action) {
+            if (action == 'show'){
+                document.getElementById('userModelsTable').style.display = 'block';
+            } else {
+                document.getElementById('userModelsTable').style.display = 'none';
+            }
+        }
+    </script>
 </head>
 <body>
     <header>
@@ -125,6 +133,45 @@
                         <td>tts</td>
                         <td>Text to speech converter</td>
                         <td>10.00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section>
+            <h2>Models available to User</h2>
+            <form method="post">
+                <fieldset>
+                    <legend>Select User:</legend>
+                    <select id="userName" name="userName">
+                        <option value="0">&nbsp;</option>
+                        <option value="johnSmith">johnSmith</option>
+                        <option value="kyleLowry">kyleLowry</option>
+                        <option value="kelvinLi">kelvinLi</option>
+                        <option value="aliZahir" selected>aliZahir</option>
+                        <option value="scootBarnes">scootBarnes</option>
+                    </select>
+                <br>
+                <input type="button" onclick="showModels('show')" value="Search Models">
+                <input type="button" onclick="showModels('cancel')" value="Cancel">
+            </form>
+            <table id="userModelsTable" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>userName</th>
+                        <th>languageModelName</th>
+                        <th>subscriptionName</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>aliZahir</td>
+                        <td>tts</td>
+                        <th>RAC</th>
+                    </tr>
+                    <tr>
+                        <td>aliZahir</td>
+                        <td>whisper</td>
+                        <th>RAC</th>
                     </tr>
                 </tbody>
             </table>
