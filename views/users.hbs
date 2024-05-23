@@ -1,0 +1,44 @@
+<!-- users.hbs -->
+<header>
+    <h1>Users</h1>
+</header>
+
+{{> nav}}
+
+<main>
+    <h2>Browse Users</h2>
+    <a href="/edit-user-form">Add or Edit Users</a>
+
+    <table id="user-table">
+        <thead>
+            <tr>
+                {{#each data.[0]}}
+                <th>
+                    {{@key}}
+                </th>
+                {{/each}}
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr data-value={{this.userID}}>
+                <td>{{this.userID}}</td>
+                <td>{{this.organizationID}}</td>
+                <td>{{this.subscriptionID}}</td>
+                <td>{{this.userName}}</td>
+                <td>{{this.email}}</td>
+                <td>{{this.password}}</td>
+                <td>{{this.remainingCredits}}</td>
+                <td>
+                    <form method="GET" action="/edit-user-form/{{this.userID}}">
+                    <button type="submit">edit</button>
+                    </form>
+                </td>
+                <td><button onclick="deleteUser({{this.userID}})">delete</button></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <script src="./js/delete_user.js"></script>
+
+</main>

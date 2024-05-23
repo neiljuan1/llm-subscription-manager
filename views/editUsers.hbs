@@ -1,0 +1,86 @@
+
+<header>
+    <h1>Edit Usesr</h1>
+</header>
+
+{{> nav}}
+
+<main>
+    <section id="insert">
+        <h2>Add a New User</h2>
+
+    <form id="add-user-form" method="POST" action="/add-user-form">
+        <fieldset>
+            <legend>User Details:</legend>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username"><br><br>
+
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email">
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password"><br><br>
+
+            <label for="remainingCredits">Remaining Credits</label>
+            <input type="number" id="remainingCredits" name="remainingCredits"><br><br>
+
+            <label for="organization">Organization</label>
+            <select name="organization" id="organization">
+                <option value="0">&nbsp;</option>
+                {{#each organizations}}
+                    <option value="{{this.organizationID}}">{{this.organizationName}}</option>
+                {{/each}}
+            </select>
+
+            <label for="subscription">Subscription</label>
+            <select name="subscription" id="subscription">
+                <option value="0">&nbsp;</option>
+                {{#each subscriptions}}
+                    <option value="{{this.subscriptionID}}">{{this.subscriptionName}}</option>
+                {{/each}}
+            </select>
+        </fieldset>
+        <br>
+        <input type="submit" value="Add User">
+    </form>
+    </section>
+    <section id="update">
+        <h2>Update Existing User</h2>
+        <form action="/users/update" method="post">
+            <fieldset>
+                <legend>User Details:</legend>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" value="{{userData.userName}}"><br><br>
+
+                <label for="email">Email</label>
+                <input type="text" id="username" name="email" value="{{userData.email}}">
+
+                <label for="password">Password</label>
+                <input type="text" id="username" name="password" value="{{userData.password}}"><br><br>
+
+                <label for="remainingCredits">Remaining Credits</label>
+                <input type="number" id="remainingCredits" name="remainingCredits" value="{{userData.remainingCredits}}"><br><br>
+                
+                <label for="organization">Organization</label>
+                <select name="organization" id="organization">
+                    <option value="{{userData.organizationID}}" selected>{{userData.organizationName}}</option>
+                    <option value="0">&nbsp;</option>
+                    {{#each organizations}}
+                        <option value="{{this.organizationID}}">{{this.organizationName}}</option>
+                    {{/each}}
+                </select>
+
+                <label for="subscription">Subscription</label>
+                <select name="subscription" id="subscription">
+                    <option value="{{userData.subscriptionID}}" selected>{{userData.subscriptionName}}</option>
+                    <option value="0">&nbsp;</option>
+                    {{#each subscriptions}}
+                        <option value="{{this.subscriptionID}}">{{this.subscriptionName}}</option>
+                    {{/each}}
+                </select>
+            </fieldset>
+            <br>
+            <input type="submit" value="Update User">
+        </form>
+    </section>
+</main>

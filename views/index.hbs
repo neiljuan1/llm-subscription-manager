@@ -1,0 +1,116 @@
+<!-- index.hbs -->
+<header>
+    <h1>LLM Subscription Manager</h1>
+</header>
+{{> nav}}
+<table id="user-table">
+    <thead>
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+    <tbody>
+        {{#each data}}
+        <tr data-value={{this.userID}}>
+            <td>{{this.userID}}</td>
+            <td>{{this.organizationID}}</td>
+            <td>{{this.subscriptionID}}</td>
+            <td>{{this.userName}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.password}}</td>
+            <td>{{this.remainingCredits}}</td>
+            <td><button onclick="deleteUser({{this.userID}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="./js/delete_user.js"></script>
+
+<form id="add-user-form" method="POST" action="/add-user-form">
+    <fieldset>
+        <legend>User Details:</legend>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username"><br><br>
+
+        <label for="email">Email</label>
+        <input type="text" id="email" name="email">
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password"><br><br>
+
+        <label for="remainingCredits">Remaining Credits</label>
+        <input type="number" id="remainingCredits" name="remainingCredits"><br><br>
+
+        <label for="organization">Organization</label>
+        <select name="organization" id="organization">
+            <option value="0">&nbsp;</option>
+            {{#each organizations}}
+                <option value="{{this.organizationID}}">{{this.organizationName}}</option>
+            {{/each}}
+        </select>
+
+        <label for="subscription">Subscription</label>
+        <select name="subscription" id="subscription">
+            <option value="0">&nbsp;</option>
+            {{#each subscriptions}}
+                <option value="{{this.subscriptionID}}">{{this.subscriptionName}}</option>
+            {{/each}}
+        </select>
+    </fieldset>
+    <br>
+    <input type="submit" value="Add User">
+</form> 
+
+
+<h2>Search for User</h2>
+<p>Search by username</p>
+<form mehtod="GET" id="search-user" action="/">
+    <label for="input-username">Search by username</label>
+    <input type="text" name="username" id="input-username">
+
+    <input type="submit">
+    <a href="/"><button>Reset</button></a>
+</form>
+
+
+<h2>Update Existing User</h2>
+<form id="update-user-form-ajax">
+    <fieldset>
+        <legend>User Details:</legend>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username"><br><br>
+
+        <label for="email">Email</label>
+        <input type="text" id="username" name="email">
+
+        <label for="password">Password</label>
+        <input type="text" id="username" name="password"><br><br>
+
+        <label for="remainingCredits">Remaining Credits</label>
+        <input type="number" id="remainingCredits" name="remainingCredits"><br><br>
+        
+        <label for="organization">Organization</label>
+        <select name="organization" id="organization">
+            <option value="0">&nbsp;</option>
+            {{#each organizations}}
+                <option value="{{this.organizationID}}">{{this.organizationName}}</option>
+            {{/each}}
+        </select>
+
+        <label for="subscription">Subscription</label>
+        <select name="subscription" id="subscription">
+            <option value="0">&nbsp;</option>
+            {{#each subscriptions}}
+                <option value="{{this.subscriptionID}}">{{this.subscriptionName}}</option>
+            {{/each}}
+        </select>
+    </fieldset>
+    <br>
+    <input type="submit" value="Update User">
+</form>
+
+<script src="./js/update_person.js"></script>
