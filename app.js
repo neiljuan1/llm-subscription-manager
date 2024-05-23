@@ -21,6 +21,10 @@ app.get('/', function(req, res) {
     res.render('index');
 });
 
+app.get('/index', function(req, res) {
+    res.render('index');
+});
+
 app.get('/users', function(req, res) {
     let query1 = 'SELECT * FROM Users;';
     db.pool.query(query1, function(err, rows, fields){
