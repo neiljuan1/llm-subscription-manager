@@ -111,7 +111,33 @@ app.get('/edit-user-form/:userID', function(req, res) {
     })
 });
 
-app.post('/add-user-form', function(req, res) {
+app.post('/users/update', function(req, res) {
+    let data = req.body;
+    console.log('data: ', data);
+    let userID = data.userID;
+    let organization = data.organization;
+    if (organization == '' || organization == '0') {
+        organization = null;
+    }
+
+    let subscription = data.subscription;
+    if (subscription == '' || subscription == '0') {
+        subscription = null;
+    }
+
+    let query = `UPDATE Users SET userName = '${data.username}', email = '${data.email}', password = '${data.password}', remainingCredits = ${data.remainingCredits}, organizationID = ${organization}, subscriptionID = ${subscription} WHERE userID = ${userID}`;
+
+    db.pool.query(query, function(error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            return res.redirect('/users');
+        }
+    });
+});
+
+app.post('/users/add', function(req, res) {
 
     let data = req.body;
     organization = data.organization;
@@ -141,7 +167,7 @@ app.post('/add-user-form', function(req, res) {
 });
 
 
-app.delete('/delete-user-ajax/', function(req, res, next) {
+app.delete('/users/deleteAjax/', function(req, res, next) {
     let data = req.body;
     let userID = parseInt(data.id);
     let deleteUserQuery = `DELETE FROM Users WHERE userID = ?;`

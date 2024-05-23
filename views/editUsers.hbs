@@ -1,6 +1,6 @@
 
 <header>
-    <h1>Edit Usesr</h1>
+    <h1>Edit Users</h1>
 </header>
 
 {{> nav}}
@@ -9,7 +9,7 @@
     <section id="insert">
         <h2>Add a New User</h2>
 
-    <form id="add-user-form" method="POST" action="/add-user-form">
+    <form id="add-user-form" method="POST" action="/users/add">
         <fieldset>
             <legend>User Details:</legend>
             <label for="username">Username</label>
@@ -49,6 +49,9 @@
         <form action="/users/update" method="post">
             <fieldset>
                 <legend>User Details:</legend>
+                <label for="userID">userID</label>
+                <input type="text" id="userID" name="userID" value="{{userData.userID}}"><br><br>
+
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" value="{{userData.userName}}"><br><br>
 

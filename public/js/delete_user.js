@@ -9,7 +9,7 @@ function deleteUser(userID) {
 
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("DELETE", "/delete-user-ajax", true);
+    xhttp.open("DELETE", "/users/deleteAjax", true);
     xhttp.setRequestHeader("Content-type", "application/json");
     console.log(xhttp.readyState);
     console.log(xhttp.status);
