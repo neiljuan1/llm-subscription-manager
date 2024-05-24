@@ -1,4 +1,5 @@
 
+// Credit for setup and ajax from nodejs-starter template
 let express = require('express');
 let app = express();
 app.use(express.json());
@@ -163,7 +164,7 @@ app.post('/users/update', function(req, res) {
     }
 
     // User cannot have an organization and subscription. At least 1 must be null
-    if (organization !== null && subscription !== null) {
+    if ((organization !== null && subscription !== null) || (organization === null && subscription === null)) {
         res.sendStatus(400);
         return;
     };
@@ -195,8 +196,7 @@ app.post('/users/add', function(req, res) {
     };
 
     // User cannot have an organization and subscription. At least 1 must be null
-    if (organization !== null && subscription !== null) {
-
+    if ((organization !== null && subscription !== null) || (organization === null && subscription === null)) {
         res.sendStatus(400);
         return;
     };

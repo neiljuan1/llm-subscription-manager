@@ -9,7 +9,7 @@
     <section id="insert">
         <h2>Add a New User</h2>
 
-    <form id="add-user-form" method="POST" action="/users/add">
+    <form id="add-user-form" method="POST" action="/users/add" onsubmit="return validateAddForm()">
         <fieldset>
             <legend>User Details:</legend>
             <label for="username">Username</label>
@@ -48,7 +48,7 @@
     </section>
     <section id="update">
         <h2>Update Existing User</h2>
-        <form action="/users/update" method="post">
+        <form action="/users/update" method="post" onsubmit="return validateUpdateForm()">
             <fieldset>
                 <legend>User Details:</legend>
                 <label for="userID">userID</label>
@@ -69,7 +69,7 @@
                 <strong>Fill in Organization OR Subscription (Not Both)</strong>
                 <br>
                 <label for="organization">Organization</label>
-                <select name="organization" id="organization">
+                <select name="organization" id="update-organization">
                     <option value="{{userData.organizationID}}" selected>{{userData.organizationName}}</option>
                     <option value="0">&nbsp;</option>
                     {{#each organizations}}
@@ -78,7 +78,7 @@
                 </select>
 
                 <label for="subscription">Subscription</label>
-                <select name="subscription" id="subscription">
+                <select name="subscription" id="update-subscription">
                     <option value="{{userData.subscriptionID}}" selected>{{userData.subscriptionName}}</option>
                     <option value="0">&nbsp;</option>
                     {{#each subscriptions}}
@@ -91,3 +91,27 @@
         </form>
     </section>
 </main>
+
+<script>
+    // Function to validate that only 1 field is entered
+    function validateAddForm() {
+        let subscription = document.getElementById('subscription').value;
+        let organization = document.getElementById('organization').value;
+
+        if ((subscription == '0' && organization == '0') || (subscription != '0' && organization != '0')){
+            alert('Please enter only one field');
+            return false;
+        }
+        return true;
+    }
+    function validateUpdateForm() {
+        let subscription = document.getElementById('update-subscription').value;
+        let organization = document.getElementById('update-organization').value;
+
+        if ((subscription == '0' && organization == '0') || (subscription != '0' && organization != '0')){
+            alert('Please enter only one field');
+            return false;
+        }
+        return true;
+    }
+</script>
