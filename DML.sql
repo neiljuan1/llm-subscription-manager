@@ -63,6 +63,7 @@ SELECT userID, userName FROM Users;
 SELECT CONCAT(userID, '. ', userName)
 FROM Users
 WHERE userID = :userID;
+SELECT * FROM Users WHERE userID = ${userID}
 
 -- ----------------- Organizations
 -- Organizations Table
@@ -97,6 +98,9 @@ SELECT o.organizationName, o.organizationDescription, s.subscriptionName
 FROM Organizations as o
 INNER JOIN Subscriptions as s ON o.subscriptionID = s.subscriptionID
 WHERE organizationID = :organizationID; -- example - :organizationID = 3;
+SELECT organizationName FROM Organizations WHERE organizationID = ${userOrganization};
+SELECT * FROM Organizations WHERE organizationID = ${userOrganization};
+
 
 
 -- ----------------- Subscriptions
@@ -123,6 +127,8 @@ DELETE FROM Subscriptions WHERE Subscriptions.subscriptionID = :subscriptionID;
 SELECT subscriptionID FROM Subscriptions;
 SELECT subscriptionName FROM Subscriptions;
 SELECT subscriptionID, subscriptionName FROM Subscriptions;
+SELECT subscriptionName FROM Subscriptions WHERE subscriptionID = ${userSubscription};
+SELECT * FROM Subscriptions WHERE subscriptionID = ${userSubscription};
 
 SELECT CONCAT(subscriptionID, '. ', subscriptionName)
 FROM Subscriptions
