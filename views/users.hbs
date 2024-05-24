@@ -7,7 +7,7 @@
 
 <main>
     <h2>Browse Users</h2>
-    <a href="/edit-user-form">Add or Edit Users</a>
+    <a href="/user/edit">Add or Edit Users</a>
 
     <table id="user-table">
         <thead>
@@ -30,7 +30,7 @@
                 <td>{{this.password}}</td>
                 <td>{{this.remainingCredits}}</td>
                 <td>
-                    <form method="GET" action="/edit-user-form/{{this.userID}}">
+                    <form method="GET" action="/user/edit/{{this.userID}}#update">
                     <button type="submit">edit</button>
                     </form>
                 </td>

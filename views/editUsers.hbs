@@ -24,6 +24,8 @@
             <label for="remainingCredits">Remaining Credits</label>
             <input type="number" id="remainingCredits" name="remainingCredits"><br><br>
 
+            <strong>Fill in Organization OR Subnscription (Not Both)</strong>
+            <br>
             <label for="organization">Organization</label>
             <select name="organization" id="organization">
                 <option value="0">&nbsp;</option>
@@ -64,6 +66,8 @@
                 <label for="remainingCredits">Remaining Credits</label>
                 <input type="number" id="remainingCredits" name="remainingCredits" value="{{userData.remainingCredits}}"><br><br>
                 
+                <strong>Fill in Organization OR Subnscription (Not Both)</strong>
+                <br>
                 <label for="organization">Organization</label>
                 <select name="organization" id="organization">
                     <option value="{{userData.organizationID}}" selected>{{userData.organizationName}}</option>

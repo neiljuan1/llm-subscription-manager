@@ -3,114 +3,152 @@
     <h1>LLM Subscription Manager</h1>
 </header>
 {{> nav}}
-<table id="user-table">
-    <thead>
-        <tr>
-            {{#each data.[0]}}
-            <th>
-                {{@key}}
-            </th>
-            {{/each}}
-        </tr>
-    </thead>
-    <tbody>
-        {{#each data}}
-        <tr data-value={{this.userID}}>
-            <td>{{this.userID}}</td>
-            <td>{{this.organizationID}}</td>
-            <td>{{this.subscriptionID}}</td>
-            <td>{{this.userName}}</td>
-            <td>{{this.email}}</td>
-            <td>{{this.password}}</td>
-            <td>{{this.remainingCredits}}</td>
-            <td><button onclick="deleteUser({{this.userID}})">Delete</button></td>
-        </tr>
-        {{/each}}
-    </tbody>
-</table>
-<script src="./js/delete_user.js"></script>
-
-<form id="add-user-form" method="POST" action="/add-user-form">
-    <fieldset>
-        <legend>User Details:</legend>
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username"><br><br>
-
-        <label for="email">Email</label>
-        <input type="text" id="email" name="email">
-
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password"><br><br>
-
-        <label for="remainingCredits">Remaining Credits</label>
-        <input type="number" id="remainingCredits" name="remainingCredits"><br><br>
-
-        <label for="organization">Organization</label>
-        <select name="organization" id="organization">
-            <option value="0">&nbsp;</option>
-            {{#each organizations}}
-                <option value="{{this.organizationID}}">{{this.organizationName}}</option>
-            {{/each}}
-        </select>
-
-        <label for="subscription">Subscription</label>
-        <select name="subscription" id="subscription">
-            <option value="0">&nbsp;</option>
-            {{#each subscriptions}}
-                <option value="{{this.subscriptionID}}">{{this.subscriptionName}}</option>
-            {{/each}}
-        </select>
-    </fieldset>
-    <br>
-    <input type="submit" value="Add User">
-</form> 
-
-
-<h2>Search for User</h2>
-<p>Search by username</p>
-<form mehtod="GET" id="search-user" action="/">
-    <label for="input-username">Search by username</label>
-    <input type="text" name="username" id="input-username">
-
-    <input type="submit">
-    <a href="/"><button>Reset</button></a>
-</form>
-
-
-<h2>Update Existing User</h2>
-<form id="update-user-form-ajax">
-    <fieldset>
-        <legend>User Details:</legend>
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username"><br><br>
-
-        <label for="email">Email</label>
-        <input type="text" id="username" name="email">
-
-        <label for="password">Password</label>
-        <input type="text" id="username" name="password"><br><br>
-
-        <label for="remainingCredits">Remaining Credits</label>
-        <input type="number" id="remainingCredits" name="remainingCredits"><br><br>
-        
-        <label for="organization">Organization</label>
-        <select name="organization" id="organization">
-            <option value="0">&nbsp;</option>
-            {{#each organizations}}
-                <option value="{{this.organizationID}}">{{this.organizationName}}</option>
-            {{/each}}
-        </select>
-
-        <label for="subscription">Subscription</label>
-        <select name="subscription" id="subscription">
-            <option value="0">&nbsp;</option>
-            {{#each subscriptions}}
-                <option value="{{this.subscriptionID}}">{{this.subscriptionName}}</option>
-            {{/each}}
-        </select>
-    </fieldset>
-    <br>
-    <input type="submit" value="Update User">
-</form>
-
-<script src="./js/update_person.js"></script>
+    <main>
+        <section>
+            <h2>Subscriptions by User</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>userName</th>
+                        <th>organizationName</th>
+                        <th>subscriptionName</th>
+                        <th>startDate</th>
+                        <th>costPerMonth</th>
+                        <th>creditsGivenPerMonth</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>johnSmith</td>
+                        <td>Combustion Research Lab</td>
+                        <td>CRL</td>
+                        <td>2023-12-27</td>
+                        <td>250.00</td>
+                        <td>1000000.00</td>
+                    </tr>
+                    <tr>
+                        <td>kyleLowry</td>
+                        <td>Combustion Research Lab</td>
+                        <td>CRL</td>
+                        <td>2023-12-27</td>
+                        <td>250.00</td>
+                        <td>1000000.00</td>
+                    </tr>
+                    <tr>
+                        <td>kelvinLi</td>
+                        <td>Energy and Sustainability Lab</td>
+                        <td>ESL</td>
+                        <td>2024-03-01</td>
+                        <td>1000.00</td>
+                        <td>200000000.00</td>
+                    </tr>
+                    <tr>
+                        <td>aliZahir</td>
+                        <td>RRC AI Club</td>
+                        <td>RAC</td>
+                        <td>2024-04-01</td>
+                        <td>5000.00</td>
+                        <td>500000000.00</td>
+                    </tr>
+                    <tr>
+                        <td>scootBarnes</td>
+                        <td></td>
+                        <td>barnes-indv</td>
+                        <td>2024-01-14</td>
+                        <td>40.00</td>
+                        <td>5000.00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section>
+            <h2>Models by Subscription</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>subscriptionName</th>
+                        <th>creditsGivenPerMonth</th>
+                        <th>languageModelName</th>
+                        <th>languageModelDescription</th>
+                        <th>creditsPerToken</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CRL</td>
+                        <td>1000000.00</td>
+                        <td>gpt-3.5 turbo</td>
+                        <td>Cost effective, general knowledge</td>
+                        <td>1.00</td>
+                    </tr>
+                    <tr>
+                        <td>ESL</td>
+                        <td>200000000.00</td>
+                        <td>gpt-4-turbo</td>
+                        <td>General knowledge and domain expertise with vision model</td>
+                        <td>3.00</td>
+                    </tr>
+                    <tr>
+                        <td>RAC</td>
+                        <td>500000000.00</td>
+                        <td>gpt-4-turbo</td>
+                        <td>General knowledge and domain expertise with vision model</td>
+                        <td>3.00</td>
+                    </tr>
+                    <tr>
+                        <td>RAC</td>
+                        <td>500000000.00</td>
+                        <td>whisper</td>
+                        <td>Speech to text converter</td>
+                        <td>10.00</td>
+                    </tr>
+                    <tr>
+                        <td>barnes-indv</td>
+                        <td>5000.00</td>
+                        <td>tts</td>
+                        <td>Text to speech converter</td>
+                        <td>10.00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section>
+            <h2>Models available to User</h2>
+            <form method="post">
+                <fieldset>
+                    <legend>Select User:</legend>
+                    <select id="userName" name="userName">
+                        <option value="0">&nbsp;</option>
+                        <option value="johnSmith">johnSmith</option>
+                        <option value="kyleLowry">kyleLowry</option>
+                        <option value="kelvinLi">kelvinLi</option>
+                        <option value="aliZahir" selected>aliZahir</option>
+                        <option value="scootBarnes">scootBarnes</option>
+                    </select>
+                <br>
+                <input type="button" onclick="showModels('show')" value="Search Models">
+                <input type="button" onclick="showModels('cancel')" value="Cancel">
+            </form>
+            <table id="userModelsTable" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>userName</th>
+                        <th>languageModelName</th>
+                        <th>subscriptionName</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>aliZahir</td>
+                        <td>tts</td>
+                        <th>RAC</th>
+                    </tr>
+                    <tr>
+                        <td>aliZahir</td>
+                        <td>whisper</td>
+                        <th>RAC</th>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>

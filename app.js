@@ -25,6 +25,40 @@ app.get('/index', function(req, res) {
     res.render('index');
 });
 
+app.get('/languageModels', function(req, res) {
+    res.render('languageModels');
+});
+
+app.get('/languageModels/edit', function(req, res) {
+    res.render('editLanguageModels');
+});
+
+app.get('/subscriptions', function(req, res) {
+    res.render('subscriptions');
+});
+
+app.get('/subscriptions/edit', function(req, res) {
+    res.render('editSubscriptions');
+});
+
+app.get('/organizations', function(req, res) {
+    res.render('organizations');
+});
+
+app.get('/organizations/edit', function(req, res) {
+    res.render('editOrganizations');
+});
+
+app.get('/subscriptionLanguageModels', function(req, res) {
+    res.render('subscriptionLanguageModels');
+});
+
+app.get('/subscriptionLanguageModels/edit', function(req, res) {
+    res.render('editSubscriptionLanguageModels');
+});
+
+
+// READ User Data
 app.get('/users', function(req, res) {
     let query1 = 'SELECT * FROM Users;';
     db.pool.query(query1, function(err, rows, fields){
@@ -33,8 +67,8 @@ app.get('/users', function(req, res) {
     })
 });
 
-
-app.get('/edit-user-form', function(req, res) {
+// User Edit page
+app.get('/user/edit', function(req, res) {
     let query1 = 'SELECT * FROM Users;';
     let query2 = 'SELECT * FROM Organizations;';
     let query3 = 'SELECT * FROM Subscriptions;';
@@ -42,7 +76,6 @@ app.get('/edit-user-form', function(req, res) {
         let users = rows;
         db.pool.query(query2, function(err, rows, fields){
             let organizations = rows;
-
             db.pool.query(query3, function(err, rows, fields){
                 let subscriptions = rows;
                 return res.render('editUsers', {data: users, organizations: organizations, subscriptions: subscriptions});
@@ -51,7 +84,8 @@ app.get('/edit-user-form', function(req, res) {
     })
 });
 
-app.get('/edit-user-form/:userID', function(req, res) {
+// User Update page
+app.get('/user/edit/:userID', function(req, res) {
     let userID = req.params.userID;
     let userQuery = `SELECT * FROM Users WHERE userID = ${userID}`
     let query1 = 'SELECT * FROM Users;';
@@ -61,17 +95,19 @@ app.get('/edit-user-form/:userID', function(req, res) {
         let users = rows;
         db.pool.query(query2, function(err, rows, fields){
             let organizations = rows;
-
             db.pool.query(query3, function(err, rows, fields){
                 let subscriptions = rows;
-
                 db.pool.query(userQuery, function(err, rows, fields){
+                    if (rows.length === 0) {
+                        console.log("User Not Found.");
+                        res.sendStatus(404);
+                        return;
+                    }
+
+                    // Get Specific user data to populate update form
                     let userData = rows[0];
-                    console.log(userData);
                     let userSubscription = userData.subscriptionID;
                     let userOrganization = userData.organizationID;
-                    console.log(userSubscription);
-                    console.log(userOrganization);
                     let querySubName;
                     let queryOrgName;
                     if (userSubscription !== null) {
@@ -80,7 +116,6 @@ app.get('/edit-user-form/:userID', function(req, res) {
                     if (userOrganization !== null){
                         queryOrgName = `SELECT organizationName FROM Organizations WHERE organizationID = ${userOrganization};`;
                     }
-                    console.log(queryOrgName);
                     db.pool.query(querySubName, function(err, rows, fields){
                         let userSubName;
                         if (userSubscription !== null) {
@@ -111,6 +146,8 @@ app.get('/edit-user-form/:userID', function(req, res) {
     })
 });
 
+
+// UPDATE User Data
 app.post('/users/update', function(req, res) {
     let data = req.body;
     console.log('data: ', data);
@@ -125,6 +162,12 @@ app.post('/users/update', function(req, res) {
         subscription = null;
     }
 
+    // User cannot have an organization and subscription. At least 1 must be null
+    if (organization !== null && subscription !== null) {
+        res.sendStatus(400);
+        return;
+    };
+
     let query = `UPDATE Users SET userName = '${data.username}', email = '${data.email}', password = '${data.password}', remainingCredits = ${data.remainingCredits}, organizationID = ${organization}, subscriptionID = ${subscription} WHERE userID = ${userID}`;
 
     db.pool.query(query, function(error, rows, fields) {
@@ -137,6 +180,7 @@ app.post('/users/update', function(req, res) {
     });
 });
 
+// CREATE User data
 app.post('/users/add', function(req, res) {
 
     let data = req.body;
@@ -150,12 +194,17 @@ app.post('/users/add', function(req, res) {
         subscription = null;
     };
 
+    // User cannot have an organization and subscription. At least 1 must be null
+    if (organization !== null && subscription !== null) {
+
+        res.sendStatus(400);
+        return;
+    };
+
     query1 = `INSERT INTO Users (userName, email, password, remainingCredits, organizationID, subscriptionID) 
               VALUES ('${data.username}', '${data.email}', '${data.password}', ${data.remainingCredits}, ${organization}, ${subscription})`
     db.pool.query(query1, function (error, rows, fields) {
-
         if (error) {
-
             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
             console.log(error)
             res.sendStatus(400);
@@ -167,6 +216,7 @@ app.post('/users/add', function(req, res) {
 });
 
 
+// DELTE User data
 app.delete('/users/deleteAjax/', function(req, res, next) {
     let data = req.body;
     let userID = parseInt(data.id);
