@@ -268,7 +268,6 @@ app.get('/users/:userID', function(req, res) {
                         res.sendStatus(404);
                         return;
                     }
-
                     // Get Specific user data to populate update form
                     let userData = rows[0];
                     let userSubscription = userData.subscriptionID;
@@ -336,8 +335,10 @@ app.post('/users/update', function(req, res) {
     let query = `UPDATE Users SET userName = '${data.username}', email = '${data.email}', password = '${data.password}', remainingCredits = ${data.remainingCredits}, organizationID = ${organization}, subscriptionID = ${subscription} WHERE userID = ${userID}`;
     db.pool.query(query, function(error, rows, fields) {
         if (error) {
-            console.log(error);
-            res.sendStatus(400);
+            // Log error and redirect to entity page
+            let errorMessage = encodeURIComponent(`Error: ${error.sqlMessage}. Please try again`);
+            console.log(errorMessage);
+            return res.redirect(`/users/?errorMessage=${errorMessage}`);
         } else {
             return res.redirect('/users');
         }
@@ -368,8 +369,8 @@ app.post('/users/add', function(req, res) {
               VALUES ('${data.username}', '${data.email}', '${data.password}', ${data.remainingCredits}, ${organization}, ${subscription})`
     db.pool.query(query1, function (error, rows, fields) {
         if (error) {
-            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            let errorMessage = encodeURIComponent(`Error: ${error.sqlMessage}. Please Try again`);
+            // Log error and redirect to entity page
+            let errorMessage = encodeURIComponent(`Error: ${error.sqlMessage}. Please try again`);
             console.log(errorMessage);
 
             return res.redirect(`/users/?errorMessage=${errorMessage}`);
