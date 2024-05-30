@@ -6,10 +6,11 @@
 {{> nav}}
 
 <main>
+    {{#if errorMessage}}
+        <p style="color:red;">{{errorMessage}}</p>
+    {{/if}}
     <section>
         <h2>Browse Users</h2>
-        <a href="/user/edit">Add or Edit Users</a>
-
         <table id="user-table">
             <thead>
                 <tr>

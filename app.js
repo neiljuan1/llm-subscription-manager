@@ -14,6 +14,7 @@ let db = require('./database/db-connector.js');
 // templating engine
 const { engine } = require('express-handlebars');  // Import engine function from express handlebars module
 var exphbs = require('express-handlebars');  // Import express-handlebars
+const { errorMonitor } = require('events');
 app.engine('.hbs', engine({extname: ".hbs", partialsDir:[path.join(__dirname, 'views/partials')]})); // Create an instance of the handlebars engine to process templates
 app.set('view engine', '.hbs');                 // Tell express to use handlebars engine whenever it encounters .hbs file
 
@@ -235,13 +236,14 @@ app.get('/users', function(req, res) {
     let query1 = 'SELECT * FROM Users;';
     let query2 = 'SELECT * FROM Organizations;';
     let query3 = 'SELECT * FROM Subscriptions;';
+    let errorMessage = req.query.errorMessage;
     db.pool.query(query1, function(err, rows, fields){
         let users = rows;
         db.pool.query(query2, function(err, rows, fields){
             let organizations = rows;
             db.pool.query(query3, function(err, rows, fields){
                 let subscriptions = rows;
-                return res.render('Users', {data: users, organizations: organizations, subscriptions: subscriptions});
+                return res.render('Users', {data: users, organizations: organizations, subscriptions: subscriptions, errorMessage: errorMessage});
             })
         })
     })
@@ -332,7 +334,6 @@ app.post('/users/update', function(req, res) {
     };
 
     let query = `UPDATE Users SET userName = '${data.username}', email = '${data.email}', password = '${data.password}', remainingCredits = ${data.remainingCredits}, organizationID = ${organization}, subscriptionID = ${subscription} WHERE userID = ${userID}`;
-
     db.pool.query(query, function(error, rows, fields) {
         if (error) {
             console.log(error);
@@ -368,8 +369,10 @@ app.post('/users/add', function(req, res) {
     db.pool.query(query1, function (error, rows, fields) {
         if (error) {
             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            console.log(error)
-            res.sendStatus(400);
+            let errorMessage = encodeURIComponent(`Error: ${error.sqlMessage}. Please Try again`);
+            console.log(errorMessage);
+
+            return res.redirect(`/users/?errorMessage=${errorMessage}`);
         }
         else {
             return res.redirect('/users');
