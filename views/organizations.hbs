@@ -5,44 +5,108 @@
 <main>
     <section>
         <h2>Browse Organizations</h2>
-        <a href="/organizations/edit">Add or Edit Organizations</a>
+        {{!-- <a href="/organizations/edit">Add or Edit Organizations</a> --}}
         <table>
             <thead>
                 <tr>
-                    <th>organizationID</th>
-                    <th>organizationName</th>
-                    <th>organizationDescription</th>
-                    <th>subscriptionID</th>
+                    {{#each organizations.[0]}}
+                        <th>{{@key}}</th>
+                    {{/each}}
                     <th></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Combustion Research Lab</td>
-                    <td>Combustion, particulate emissions, nanomaterial synthesis</td>
-                    <td>1</td>
-                    <td><a href="/organizations/edit#update">edit</a></td>
-                    <td><a href="/organizations/edit#delete">delete</a></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Energy and Sustainability Lab</td>
-                    <td>Research lab in the Engineering department focused on green energy</td>
-                    <td>2</td>
-                    <td><a href="/organizations/edit#update">edit</a></td>
-                    <td><a href="/organizations/edit#delete">delete</a></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>RRC AI Club</td>
-                    <td>Student organization focused on Artificial Intelligence</td>
-                    <td>3</td>
-                    <td><a href="/organizations/edit#update">edit</a></td>
-                    <td><a href="/organizations/edit#delete">delete</a></td>
-                </tr>
+                {{#each organizations}}
+                    <tr>
+                        <td>{{this.organizationID}}</td>
+                        <td>{{this.subscriptionID}}</td>
+                        <td>{{this.organizationName}}</td>
+                        <td>{{this.organizationDescription}}</td>
+                        <td><a href="/organizations/{{this.organizationID}}#update">edit</a></td>
+                        <td>
+                            <form action="/organizations/delete" method="post">
+                                <input name="organizationID" type="number" value="{{this.organizationID}}" hidden>
+                                <button type="submit">delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {{/each}}
             </tbody>
         </table>
+    </section>
+
+    <section id="insert">
+        <h2>Add a New Organization</h2>
+        <form action="/organizations/add" method="post">
+            <fieldset>
+                <legend>Organization Details:</legend>
+                <label for="organizationName">Name</label>
+                <input type="text" id="organizationName" name="organizationName"><br><br>
+
+                <label for="organizationDescription">Description</label><br>
+                <textarea id="organizationDescription" name="organizationDescription"></textarea><br><br>
+
+                <label for="subscription">Subscription</label>
+                <select name="subscriptionID" id="subscription">
+                    <option value="0">&nbsp;</option>
+                    {{#each subscriptions}}
+                        <option value="{{this.subscriptionID}}">{{this.subscriptionName}}</option>
+                    {{/each}}
+                </select>
+            </fieldset>
+            <br>
+            <input type="submit" value="Add Organization">
+        </form>
+    </section>
+    <section id="update">
+        <h2>Update Existing Organization</h2>
+        <form id="updateForm" action="/organizations/update" method="post">
+            <fieldset>
+                <legend>Update Organization</legend>
+                <label for="organizationID">Organization ID</label>
+                <select id="organization" name="organizationID" required>
+                    {{#if orgData}}
+                        <option value="{{orgData.organizationID}}" selected>{{orgData.organizationName}}</option>
+                    {{else}}
+                        <option value="0" selected>&nbsp;</option>
+                    {{/if}}
+                    {{#each organizations}}
+                        <option value="{{this.organizationID}}">{{this.organizationName}}</option>
+                    {{/each}}
+                </select>
+
+                <label for="organizationName">Name</label>
+                {{#if orgData}}
+                    <input type="text" id="organizationName" name="organizationName" value="{{orgData.organizationName}}" required><br><br>
+                {{else}}
+                    <input type="text" id="organizationName" name="organizationName" value="" required><br><br>
+                {{/if}}
+
+                <label for="organizationDescription">Description</label><br>
+                {{#if orgData}}
+                    <textarea id="organizationDescription" name="organizationDescription" required>{{orgData.organizationDescription}}</textarea><br><br>
+                {{else}}
+                    <textarea id="organizationDescription" name="organizationDescription" required></textarea><br><br>
+                {{/if}}
+                
+                <label for="subscriptionID">Subscription</label>
+                <select name="subscriptionID" id="subscriptionID" required>
+                {{#if orgData}}
+                    <option value="{{orgData.subscriptionName}}">{{orgData.subscriptionName}}</option>
+                {{else}}
+                    <option value="0">&nbsp;</option>
+                {{/if}}
+                    <option value="0">&nbsp;</option>
+                    <option value="1">CRL</option>
+                    <option value="2">ESL</option>
+                    <option value="3" selected>RAC</option>
+                </select>
+            </fieldset>
+            <br>
+            <input type="submit" value="Update Organization">
+        </form>
+        <form action="/organizations#update" method="get"><button type="submit"> Start Over</button></form>
+
     </section>
 </main>

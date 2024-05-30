@@ -5,57 +5,108 @@
 <main>
     <section>
         <h2>Browse Subscriptions</h2>
-        <a href="/subscriptions/edit">Add or Edit Subscriptions</a>
+        {{!-- <a href="/subscriptions/edit">Add or Edit Subscriptions</a> --}}
         <table>
             <thead>
                 <tr>
-                    <th>subscriptionID</th>
-                    <th>subscriptionName</th>
-                    <th>startDate</th>
-                    <th>costPerMonth</th>
-                    <th>creditsGivenPerMonth</th>
+                    {{#each subscriptions.[0]}}
+                    <th>{{@key}}</th>
+                    {{/each}}
                     <th></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
+                {{#each subscriptions}}
                 <tr>
-                    <td>1</td>
-                    <td>CRL</td>
-                    <td>2023-12-27</td>
-                    <td>250</td>
-                    <td>1000000</td>
-                    <td><a href="/subscriptions/edit#update">edit</a></td>
-                    <td><a href="/subscriptions/edit#delete">delete</a></td>
+                    <td>{{this.subscriptionID}}</td>
+                    <td>{{this.subscriptionName}}</td>
+                    <td>{{this.startDate}}</td>                    
+                    <td>{{this.costPerMonth}}</td>
+                    <td>{{this.creditsGivenPerMonth}}</td>
+                    <td><a href="/subscriptions/{{this.subscriptionID}}#update">edit</a></td>
+                    <td>
+                        <form action="/subscriptions/delete" method="post">
+                            <input name="subscriptionID" type="number" value="{{this.subscriptionID}}" hidden>
+                            <button type="submit">delete</button>
+                        </form>
+                    </td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>ESL</td>
-                    <td>2024-03-01</td>
-                    <td>1000</td>
-                    <td>200000000</td>
-                    <td><a href="/subscriptions/edit#update">edit</a></td>
-                    <td><a href="/subscriptions/edit#delete">delete</a></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>RAC</td>
-                    <td>2024-04-01</td>
-                    <td>5000</td>
-                    <td>500000000</td>
-                    <td><a href="/subscriptions/edit#update">edit</a></td>
-                    <td><a href="/subscriptions/edit#delete">delete</a></td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>barnes-indv</td>
-                    <td>2024-01-14</td>
-                    <td>40</td>
-                    <td>5000</td>
-                    <td><a href="/subscriptions/edit#update">edit</a></td>
-                    <td><a href="/subscriptions/edit#delete">delete</a></td>
-                </tr>
+                {{/each}}
             </tbody>
         </table>
+    </section>
+
+    <section id="insert">
+        <h2>Add a New Subscription</h2>
+        <form action="/subscriptions/add" method="post">
+            <fieldset>
+                <legend>Subscription Details:</legend>
+                <label for="subscriptionName">Name</label>
+                <input type="text" id="subscriptionName" name="subscriptionName"><br><br>
+
+                <label for="startDate">Start Date</label><br>
+                <input type="date" id="startDate" name="startDate"><br><br>
+
+                <label for="costPerMonth">Cost Per Month</label>
+                <input type="number" id="costPerMonth" name="costPerMonth" min="0">
+
+                <label for="creditsGivenPerMonth">Credits Given Per Month</label>
+                <input type="number" id="creditsGivenPerMonth" name="creditsGivenPerMonth" min="0">
+            </fieldset>
+            <br>
+            <input type="submit" value="Add Subscription">
+        </form>
+    </section>
+
+    <section id="update">
+        <h2>Update Existing Subscription</h2>
+        <form action="/subscriptions/update" method="post">
+            <fieldset>
+                <legend>Update Subscription</legend>
+                <label for="subscriptionID">Subscription ID</label>
+                <select id="subscription" name="subscriptionID" required>
+                    {{#if subData}}
+                        <option value="{{subData.subscriptionID}}" selected>{{subData.subscriptionID}}</option>
+                    {{else}}
+                        <option value="0" selected>&nbsp;</option>
+                    {{/if}}
+                    {{#each subscriptions}}
+                    <option value="{{this.subscriptionID}}">{{this.subscriptionID}}</option>
+                    {{/each}}
+                </select><br><br>
+
+                <label for="subscriptionName">Name</label>
+                {{#if subData}}
+                    <input type="text" id="subscriptionName" name="subscriptionName" value="{{subData.subscriptionName}}" required><br><br>
+                {{else}}
+                    <input type="text" id="subscriptionName" name="subscriptionName" value="" required><br><br>
+                {{/if}}
+
+                <label for="startDate">Start Date</label><br>
+                {{#if subData}}
+                    <input type="date" id="startDate" name="startDate" value="{{subData.startDate}}" required><br><br>
+                {{else}}
+                    <input type="date" id="startDate" name="startDate" value="" required><br><br>
+                {{/if}}
+
+
+                <label for="costPerMonth">Cost Per Month</label>
+                {{#if subData}}
+                    <input type="number" id="costPerMonth" name="costPerMonth" value="{{subData.costPerMonth}}" min="0" required>
+                {{else}}
+                    <input type="number" id="costPerMonth" name="costPerMonth" value="" min="0" required>
+                {{/if}}
+                
+                <label for="creditsGivenPerMonth">Credits Given Per Month</label>
+                {{#if subData}}
+                    <input type="number" id="creditsGivenPerMonth" name="creditsGivenPerMonth" value="{{subData.creditsGivenPerMonth}}" min="0" required>
+                {{else}}
+                    <input type="number" id="creditsGivenPerMonth" name="creditsGivenPerMonth" value="" min="0" required>
+                {{/if}}
+            </fieldset>
+            <br>
+            <input type="submit" value="Update Subscription">
+        </form>
     </section>
 </main>

@@ -35,20 +35,191 @@ app.get('/languageModels/edit', function(req, res) {
 });
 
 app.get('/subscriptions', function(req, res) {
-    res.render('subscriptions');
+    let query1 = "SELECT * FROM Subscriptions;"
+    db.pool.query(query1, function(err, rows, fields){
+        // Format date strings
+        rows.forEach(element => {
+            let stringDate = element.startDate.toISOString();
+            element.startDate = stringDate.slice(0,10);
+        });
+        res.render('subscriptions', {subscriptions: rows});
+    })
 });
 
-app.get('/subscriptions/edit', function(req, res) {
-    res.render('editSubscriptions');
+
+app.post('/subscriptions/add', function(req, res) {
+    let subscriptions = req.body;
+
+    // Error Handle
+    let query = `INSERT INTO Subscriptions (subscriptionName, startDate, costPerMonth, creditsGivenPerMonth)
+                 VALUES ('${subscriptions.subscriptionName}', '${subscriptions.startDate}', '${subscriptions.costPerMonth}', '${subscriptions.creditsGivenPerMonth}')`;
+    db.pool.query(query, function(error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            return res.redirect('/subscriptions');
+        }
+    });
+})
+
+
+app.post('/subscriptions/delete', function(req, res) {
+    let subscriptions = req.body;
+    let subscriptionID = parseInt(subscriptions.subscriptionID);
+
+    // Error Handle
+    let query = `DELETE FROM Subscriptions WHERE subscriptionID = '${subscriptionID}';`
+    db.pool.query(query, function(error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            return res.redirect('/subscriptions');
+        }
+    });
+})
+
+
+app.get('/subscriptions/:subscriptionID', function(req, res) {
+    let subscriptionID = req.params.subscriptionID;
+    let query1 = "SELECT * FROM Subscriptions;";
+    let subQuery = `SELECT * FROM Subscriptions WHERE subscriptionID = ${subscriptionID}`
+
+    db.pool.query(query1, function(err, rows, fields){
+        let subscriptions = rows;
+        db.pool.query(subQuery, function(err, rows, fields) {
+            if (rows.length === 0){
+                console.log("Subscription Not Found.");
+                res.sendStatus(404);
+                return;
+            }
+            // Format date strings
+            rows.forEach(element => {
+                let stringDate = element.startDate.toISOString();
+                element.startDate = stringDate.slice(0,10);
+            });
+            let subData = rows[0]
+            return res.render('subscriptions', {subscriptions: subscriptions, subData: subData})
+        })
+    })
+
 });
 
+app.post('/subscriptions/update', function(req, res) {
+    let data = req.body;
+    console.log(data);
+    let costPerMonth = parseInt(data.costPerMonth);
+    let creditsGivenPerMonth = parseInt(data.creditsGivenPerMonth);
+    let query = `UPDATE Subscriptions SET subscriptionName = '${data.subscriptionName}', startDate = '${data.startDate}', costPerMonth = ${costPerMonth}, creditsGivenPerMonth = ${creditsGivenPerMonth} WHERE subscriptionID = ${data.subscriptionID}`;
+
+    db.pool.query(query, function(error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            return res.redirect('/subscriptions');
+        }
+    });
+});
+
+
+
+// ORGANIZATIONS -------------------------------
 app.get('/organizations', function(req, res) {
-    res.render('organizations');
+    let query1 = 'SELECT * FROM Organizations;'
+    let query2 = 'SELECT * FROM Subscriptions;'
+
+    db.pool.query(query2, function(err, rows, fields) {
+        let subscriptions = rows;
+        db.pool.query(query1, function(err, rows, fields) {
+            let organizations = rows;
+            return res.render('organizations', {organizations: organizations, subscriptions: subscriptions});
+        })
+    })
 });
 
-app.get('/organizations/edit', function(req, res) {
-    res.render('editOrganizations');
+app.post('/organizations/add', function(req, res) {
+    let organizations = req.body;
+
+    // Error Handle
+    let query = `INSERT INTO Organizations (organizationName, organizationDescription, subscriptionID)
+                 VALUES ('${organizations.organizationName}', '${organizations.organizationDescription}', '${organizations.subscriptionID}')`;
+    db.pool.query(query, function(error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            return res.redirect('/organizations');
+        }
+    });
+})
+
+app.post('/organizations/delete', function(req, res) {
+    let organizations = req.body;
+    let organizationID = parseInt(organizations.organizationID);
+
+    // Error Handle
+    let query = `DELETE FROM Organizations WHERE organizationID = '${organizationID}';`
+    db.pool.query(query, function(error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            return res.redirect('/organizations');
+        }
+    });
+})
+
+app.get('/organizations/:organizationID', function(req, res) {
+    let organizationID = req.params.organizationID;
+    console.log(organizationID);
+    let orgQuery = `SELECT * FROM Organizations WHERE organizationID = ${organizationID}`;
+    let query1 = 'SELECT * FROM Organizations;';
+    let query2 = 'SELECT * FROM Subscriptions;';
+
+    db.pool.query(query1, function(err, rows, fields){
+        let organizations = rows;
+        db.pool.query(query2, function(err, rows, fields){
+            let subscriptions = rows;
+            db.pool.query(orgQuery, function(err, rows, fields) {
+                console.log(rows);
+                if (rows.length === 0) {
+                    console.log("Organization Not Found.");
+                    res.sendStatus(404);
+                    return;
+                }
+
+                // Get organization data to populate update form
+                let orgData = rows[0];
+                let orgSubscription = orgData.subscriptionID;
+                console.log(orgSubscription);
+                let query3 = `SELECT subscriptionName FROM Subscriptions WHERE subscriptionID = '${orgSubscription}'`;
+                db.pool.query(query3, function(err, rows, fields){
+                    console.log(rows);
+                    orgData.subscriptionName = rows[0].subscriptionName;
+
+                    return res.render('organizations', {orgData: orgData, organizations: organizations, subscriptions: subscriptions})
+                })
+            })
+        })
+    })
 });
+
+app.post("/organizations/update", function(req, res){
+    let data = req.body;
+    console.log(data);
+    let query = `UPDATE Organizations SET organizationName = '${data.organizationName}', organizationDescription = '${data.organizationDescription}', subscriptionID = ${data.subscriptionID} WHERE organizationID = ${data.organizationID}`;
+
+    db.pool.query(query, function(error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            return res.redirect('/organizations');
+        }
+    });
+})
 
 app.get('/subscriptionLanguageModels', function(req, res) {
     res.render('subscriptionLanguageModels');
@@ -58,18 +229,9 @@ app.get('/subscriptionLanguageModels/edit', function(req, res) {
     res.render('editSubscriptionLanguageModels');
 });
 
-
+// USERS -------------------------------
 // READ User Data
 app.get('/users', function(req, res) {
-    let query1 = 'SELECT * FROM Users;';
-    db.pool.query(query1, function(err, rows, fields){
-        let users = rows;
-        return res.render('users', {data: users});
-    })
-});
-
-// User Edit page
-app.get('/user/edit', function(req, res) {
     let query1 = 'SELECT * FROM Users;';
     let query2 = 'SELECT * FROM Organizations;';
     let query3 = 'SELECT * FROM Subscriptions;';
@@ -79,14 +241,14 @@ app.get('/user/edit', function(req, res) {
             let organizations = rows;
             db.pool.query(query3, function(err, rows, fields){
                 let subscriptions = rows;
-                return res.render('editUsers', {data: users, organizations: organizations, subscriptions: subscriptions});
+                return res.render('Users', {data: users, organizations: organizations, subscriptions: subscriptions});
             })
         })
     })
 });
 
 // User Update page
-app.get('/user/edit/:userID', function(req, res) {
+app.get('/users/:userID', function(req, res) {
     let userID = req.params.userID;
     let userQuery = `SELECT * FROM Users WHERE userID = ${userID}`
     let query1 = 'SELECT * FROM Users;';
@@ -137,7 +299,7 @@ app.get('/user/edit/:userID', function(req, res) {
                             userData.organizationName = userOrgName;
                             userData.subscriptionName = userSubName;
                             return res.render(
-                                'editUsers', 
+                                'Users', 
                                 {data: users, organizations: organizations, subscriptions: subscriptions, userData: userData});
                         })
                     })

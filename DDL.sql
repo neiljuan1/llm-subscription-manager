@@ -13,7 +13,7 @@ CREATE TABLE Subscriptions(
 	subscriptionID INT NOT NULL UNIQUE AUTO_INCREMENT,
 	subscriptionName VARCHAR(100) NOT NULL,
 	startDate DATE NOT NULL,
-	costPerMonth DECIMAL(6,2) NOT NULL,
+	costPerMonth DECIMAL(10,2) NOT NULL,
 	creditsGivenPerMonth DECIMAL(12,2) NOT NULL,
 	PRIMARY KEY (subscriptionID)
 );

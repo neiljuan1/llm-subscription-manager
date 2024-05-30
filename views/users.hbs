@@ -6,39 +6,176 @@
 {{> nav}}
 
 <main>
-    <h2>Browse Users</h2>
-    <a href="/user/edit">Add or Edit Users</a>
+    <section>
+        <h2>Browse Users</h2>
+        <a href="/user/edit">Add or Edit Users</a>
 
-    <table id="user-table">
-        <thead>
-            <tr>
-                {{#each data.[0]}}
-                <th>
-                    {{@key}}
-                </th>
+        <table id="user-table">
+            <thead>
+                <tr>
+                    {{#each data.[0]}}
+                    <th>
+                        {{@key}}
+                    </th>
+                    {{/each}}
+                </tr>
+            </thead>
+            <tbody>
+                {{#each data}}
+                <tr data-value={{this.userID}}>
+                    <td>{{this.userID}}</td>
+                    <td>{{this.organizationID}}</td>
+                    <td>{{this.subscriptionID}}</td>
+                    <td>{{this.userName}}</td>
+                    <td>{{this.email}}</td>
+                    <td>{{this.password}}</td>
+                    <td>{{this.remainingCredits}}</td>
+                    <td><a href="/users/{{this.userID}}#update">edit</a></td>
+                    <td><button onclick="deleteUser({{this.userID}})">delete</button></td>
+                </tr>
                 {{/each}}
-            </tr>
-        </thead>
-        <tbody>
-            {{#each data}}
-            <tr data-value={{this.userID}}>
-                <td>{{this.userID}}</td>
-                <td>{{this.organizationID}}</td>
-                <td>{{this.subscriptionID}}</td>
-                <td>{{this.userName}}</td>
-                <td>{{this.email}}</td>
-                <td>{{this.password}}</td>
-                <td>{{this.remainingCredits}}</td>
-                <td>
-                    <form method="GET" action="/user/edit/{{this.userID}}#update">
-                    <button type="submit">edit</button>
-                    </form>
-                </td>
-                <td><button onclick="deleteUser({{this.userID}})">delete</button></td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </section>
+    <section>
+        <h2>Add Existing User</h2>
+        <form id="add-user-form" method="POST" action="/users/add" onsubmit="return validateAddForm()">
+        <fieldset>
+            <legend>User Details:</legend>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required><br><br>
+
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required><br><br>
+
+            <label for="remainingCredits">Remaining Credits</label>
+            <input type="number" id="remainingCredits" name="remainingCredits" required><br><br>
+
+            <strong>Fill in Organization OR Subscription (Not Both)</strong>
+            <br>
+            <label for="organization">Organization</label>
+            <select name="organization" id="organization">
+                <option value="0">&nbsp;</option>
+                {{#each organizations}}
+                    <option value="{{this.organizationID}}">{{this.organizationName}}</option>
+                {{/each}}
+            </select>
+
+            <label for="subscription">Subscription</label>
+            <select name="subscription" id="subscription">
+                <option value="0">&nbsp;</option>
+                {{#each subscriptions}}
+                    <option value="{{this.subscriptionID}}">{{this.subscriptionName}}</option>
+                {{/each}}
+            </select>
+        </fieldset>
+        <br>
+        <input type="submit" value="Add User">
+    </form>
+    </section>
+    <section id="update">
+        <h2>Update Existing User</h2>
+        <form action="/users/update" method="post" onsubmit="return validateUpdateForm()">
+            <fieldset>
+                <legend>User Details:</legend>
+                <label for="userID">userID</label>
+                <select id="userID" name="userID" required>
+                    {{#if userData}}
+                        <option value="{{userData.userID}}" selected>{{userData.userID}}</option>
+                    {{else}}
+                        <option value="0" selected>&nbsp;</option>
+                    {{/if}}
+                    {{#each data}}
+                    <option value="{{this.userID}}">{{this.userID}}</option>
+                    {{/each}}
+                </select><br><br>
+
+
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" value="{{userData.userName}}" required><br><br>
+
+                <label for="email">Email</label>
+                <input type="text" id="username" name="email" value="{{userData.email}}" required>
+
+                <label for="password">Password</label>
+                <input type="text" id="username" name="password" value="{{userData.password}}" required><br><br>
+
+                <label for="remainingCredits">Remaining Credits</label>
+                <input type="number" id="remainingCredits" name="remainingCredits" value="{{userData.remainingCredits}}" required><br><br>
+                
+                <strong>Fill in Organization OR Subscription (Not Both)</strong>
+                <br>
+                <label for="organization">Organization</label>
+                <select name="organization" id="update-organization">
+                    {{#if userData}}
+                        <option value="0" selected>&nbsp;</option>
+                        <option value="{{userData.organizationID}}" selected>{{userData.organizationName}}</option>
+                    {{else}}
+                        <option value="0" selected>&nbsp;</option>
+                    {{/if}}
+                    {{#each organizations}}
+                        <option value="{{this.organizationID}}">{{this.organizationName}}</option>
+                    {{/each}}
+                </select>
+
+                <label for="subscription">Subscription</label>
+                <select name="subscription" id="update-subscription">
+                    {{#if userData}}
+                        <option value="0" selected>&nbsp;</option>
+                        <option value="{{userData.subscriptionID}}" selected>{{userData.subscriptionName}}</option>
+                    {{else}}
+                        <option value="0" selected>&nbsp;</option>
+                    {{/if}}
+                    {{#each subscriptions}}
+                        <option value="{{this.subscriptionID}}">{{this.subscriptionName}}</option>
+                    {{/each}}
+                </select>
+            </fieldset>
+            <br>
+            <input type="submit" value="Update User">
+        </form>
+        <form action="/users#update" method="get"><button type="submit"> Start Over</button></form>
+    </section>
+</main>
+
+<script>
+    // Function to validate that only 1 field is entered
+    function validateAddForm() {
+        let subscription = document.getElementById('subscription').value;
+        let organization = document.getElementById('organization').value;
+        if (subscription === '') {
+            subscription = '0'
+        }
+        if (organization === '') {
+            organization = '0'
+        }
+        if ((subscription == '0' && organization == '0') || (subscription != '0' && organization != '0')){
+            alert('Please enter only one field');
+            return false;
+        }
+        return true;
+    }
+    function validateUpdateForm() {
+        let subscription = document.getElementById('update-subscription').value;
+        let organization = document.getElementById('update-organization').value;
+        if (subscription === '') {
+            subscription = '0'
+        }
+        if (organization === '') {
+            organization = '0'
+        }
+        if ((subscription == '0' && organization == '0') || (subscription != '0' && organization != '0')){
+            alert('Please enter only one field');
+            return false;
+        }
+        return true;
+    }
+</script>
+
+
     <script src="./js/delete_user.js"></script>
 
 </main>
