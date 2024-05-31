@@ -23,7 +23,7 @@
                     <td>{{this.languageModelName}}</td>
                     <td>{{this.languageModelDescription}}</td>
                     <td>{{this.creditsPerToken}}</td>
-                    <td><a href="/languageModels/{{this.languageModelID}}">edit</a></td>
+                    <td><a href="/languageModels/{{this.languageModelID}}#update">edit</a></td>
                     <td>
                         <form action="/languageModels/delete" method="post">
                             <input type="hidden" name="languageModelID" value="{{this.languageModelID}}">

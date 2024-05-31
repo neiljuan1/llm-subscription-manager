@@ -316,62 +316,175 @@ app.get('/languageModels/:languageModelID', function(req, res) {
 
 
 
-
-
-// GET Subscription Language Models
+// SUBSCRIPTION LANGUAGE MODELS -------------------------------
 app.get('/subscriptionLanguageModels', function(req, res) {
-    let query = 'SELECT SubscriptionLanguageModels.*, Subscriptions.subscriptionName, LanguageModels.modelName FROM SubscriptionLanguageModels JOIN Subscriptions ON Subscriptions.subscriptionID = SubscriptionLanguageModels.subscriptionID JOIN LanguageModels ON LanguageModels.languageModelID = SubscriptionLanguageModels.languageModelID;';
-    db.pool.query(query, function(err, slModels) {
+    // Queries to fetch necessary names and details
+    let queryModels = `SELECT sLM.subscriptionLanguageModelID, sLM.subscriptionID, sLM.languageModelID, 
+                         s.subscriptionName AS subscription, l.languageModelName AS modelName
+                       FROM SubscriptionLanguageModels sLM
+                       JOIN Subscriptions s ON sLM.subscriptionID = s.subscriptionID
+                       JOIN LanguageModels l ON sLM.languageModelID = l.languageModelID;`;
+    let querySubscriptions = `SELECT * FROM Subscriptions;`;
+    let queryLanguageModels = `SELECT * FROM LanguageModels;`;
+
+    // Execute query for Subscriptions
+    db.pool.query(querySubscriptions, function(err, subscriptions) {
         if (err) {
-            console.log(err);
-            res.sendStatus(500);
-        } else {
-            res.render('subscriptionLanguageModels', {slModels: slModels});
+            console.error('Error fetching subscriptions:', err);
+            return res.sendStatus(500); // Internal Server Error
         }
+
+        // Execute query for Language Models
+        db.pool.query(queryLanguageModels, function(err, languageModels) {
+            if (err) {
+                console.error('Error fetching language models:', err);
+                return res.sendStatus(500);
+            }
+
+            // Execute query for Subscription Language Models
+            db.pool.query(queryModels, function(err, subscriptionLanguageModels) {
+                if (err) {
+                    console.error('Error fetching subscription language models:', err);
+                    return res.sendStatus(500);
+                }
+
+                // Render the page with all fetched data
+                res.render('subscriptionLanguageModels', {
+                    subscriptionLanguageModels: subscriptionLanguageModels,
+                    subscriptions: subscriptions,
+                    languageModels: languageModels
+                });
+            });
+        });
     });
 });
 
-// ADD Subscription Language Model
+
+
 app.post('/subscriptionLanguageModels/add', function(req, res) {
-    let { subscriptionID, languageModelID } = req.body;
-    let query = 'INSERT INTO SubscriptionLanguageModels (subscriptionID, languageModelID) VALUES (?, ?)';
+    const { subscriptionID, languageModelID } = req.body;
+
+    const query = `INSERT INTO SubscriptionLanguageModels (subscriptionID, languageModelID)
+                   VALUES (?, ?);`;
     db.pool.query(query, [subscriptionID, languageModelID], function(error, results) {
         if (error) {
-            console.log(error);
-            res.sendStatus(400);
+            console.error('Failed to add subscription language model:', error);
+            res.status(400).send('Error adding new subscription language model');
         } else {
+            console.log('Added new subscription language model:', results);
             res.redirect('/subscriptionLanguageModels');
         }
     });
 });
 
-// DELETE Subscription Language Model
+
 app.post('/subscriptionLanguageModels/delete', function(req, res) {
-    let { subscriptionLanguageModelID } = req.body;
-    let query = 'DELETE FROM SubscriptionLanguageModels WHERE subscriptionLanguageModelID = ?';
-    db.pool.query(query, [subscriptionLanguageModelID], function(error, results) {
+    let subscriptionLanguageModelID = parseInt(req.body.subscriptionLanguageModelID);
+
+    let query = `DELETE FROM SubscriptionLanguageModels WHERE subscriptionLanguageModelID = ${subscriptionLanguageModelID}`;
+    db.pool.query(query, function(error) {
         if (error) {
             console.log(error);
             res.sendStatus(400);
         } else {
-            res.redirect('/subscriptionLanguageModels');
+            return res.redirect('/subscriptionLanguageModels');
         }
     });
 });
 
-// UPDATE Subscription Language Model
+
+app.get('/subscriptionLanguageModels/:subscriptionLanguageModelID', function(req, res) {
+    const subscriptionLanguageModelID = req.params.subscriptionLanguageModelID;
+    
+    // Query to fetch the specific Subscription Language Model with joined names for update form
+    const querySLMData = `
+        SELECT sLM.subscriptionLanguageModelID, sLM.subscriptionID, sLM.languageModelID, 
+               s.subscriptionName, l.languageModelName
+        FROM SubscriptionLanguageModels sLM
+        JOIN Subscriptions s ON sLM.subscriptionID = s.subscriptionID
+        JOIN LanguageModels l ON sLM.languageModelID = l.languageModelID
+        WHERE sLM.subscriptionLanguageModelID = ?;
+    `;
+
+    // Query to fetch all Subscription Language Models for the table
+    const queryAllSLMData = `
+        SELECT sLM.subscriptionLanguageModelID, sLM.subscriptionID, sLM.languageModelID, 
+               s.subscriptionName AS subscription, l.languageModelName AS modelName
+        FROM SubscriptionLanguageModels sLM
+        JOIN Subscriptions s ON sLM.subscriptionID = s.subscriptionID
+        JOIN LanguageModels l ON sLM.languageModelID = l.languageModelID;
+    `;
+
+    // Queries to fetch all Subscriptions and Language Models for dropdowns
+    const querySubscriptions = 'SELECT * FROM Subscriptions;';
+    const queryLanguageModels = 'SELECT * FROM LanguageModels;';
+
+    // Execute the query for all Subscription Language Models
+    db.pool.query(queryAllSLMData, function(err, subscriptionLanguageModels) {
+        if (err) {
+            console.error('Error fetching subscription language models:', err);
+            res.sendStatus(500); // Internal Server Error
+            return;
+        }
+
+        // Execute the query for the specific Subscription Language Model
+        db.pool.query(querySLMData, [subscriptionLanguageModelID], function(err, slmData) {
+            if (err) {
+                console.error('Error fetching specific subscription language model:', err);
+                res.sendStatus(500);
+                return;
+            }
+
+            // Execute the query for all Subscriptions
+            db.pool.query(querySubscriptions, function(err, subscriptions) {
+                if (err) {
+                    console.error('Error fetching subscriptions:', err);
+                    res.sendStatus(500);
+                    return;
+                }
+
+                // Execute the query for all Language Models
+                db.pool.query(queryLanguageModels, function(err, languageModels) {
+                    if (err) {
+                        console.error('Error fetching language models:', err);
+                        res.sendStatus(500);
+                        return;
+                    }
+
+                    // Render the page with all models and specific model data for forms
+                    res.render('subscriptionLanguageModels', {
+                        subscriptionLanguageModels: subscriptionLanguageModels,
+                        slmData: slmData[0],  // for the update form
+                        subscriptions: subscriptions,
+                        languageModels: languageModels
+                    });
+                });
+            });
+        });
+    });
+});
+
+
+
 app.post('/subscriptionLanguageModels/update', function(req, res) {
-    let { subscriptionLanguageModelID, subscriptionID, languageModelID } = req.body;
-    let query = 'UPDATE SubscriptionLanguageModels SET subscriptionID = ?, languageModelID = ? WHERE subscriptionLanguageModelID = ?';
+    const { subscriptionLanguageModelID, subscriptionID, languageModelID } = req.body;
+
+    // Use parameterized queries here as well.
+    const query = `UPDATE SubscriptionLanguageModels 
+                   SET subscriptionID = ?, languageModelID = ? 
+                   WHERE subscriptionLanguageModelID = ?;`;
     db.pool.query(query, [subscriptionID, languageModelID, subscriptionLanguageModelID], function(error, results) {
         if (error) {
-            console.log(error);
-            res.sendStatus(400);
+            console.error('Failed to update subscription language model:', error);
+            res.status(400).send('Error updating subscription language model');
         } else {
+            console.log('Updated subscription language model:', results);
             res.redirect('/subscriptionLanguageModels');
         }
     });
 });
+
+
 
 
 // USERS -------------------------------

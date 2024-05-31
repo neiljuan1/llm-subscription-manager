@@ -1,16 +1,18 @@
 <header>
-    <h1>Subscriptions - Language Models</h1>
+    <h1>Subscription Language Models</h1>
 </header>
 {{> nav}}
 <main>
     <section>
-        <h2>Browse Subscriptions - Language Models</h2>
+        <h2>Browse Subscription Language Models</h2>
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Subscription Language Model ID</th>
+                    <th>Subscription ID</th>
+                    <th>Language Model ID</th>
                     <th>Subscription</th>
-                    <th>Model</th>
+                    <th>Model Name</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -19,12 +21,15 @@
                 {{#each subscriptionLanguageModels}}
                 <tr>
                     <td>{{this.subscriptionLanguageModelID}}</td>
-                    <td>{{this.subscriptionName}}</td>
+                    <td>{{this.subscriptionID}}</td>
+                    <td>{{this.languageModelID}}</td>
+                    <td>{{this.subscription}}</td>
                     <td>{{this.modelName}}</td>
                     <td><a href="/subscriptionLanguageModels/{{this.subscriptionLanguageModelID}}#update">edit</a></td>
                     <td>
                         <form action="/subscriptionLanguageModels/delete" method="post">
-                            <input type="hidden" name="subscriptionLanguageModelID" value="{{this.subscriptionLanguageModelID}}">
+                            <input name="subscriptionLanguageModelID" type="number"
+                                value="{{this.subscriptionLanguageModelID}}" hidden>
                             <button type="submit">delete</button>
                         </form>
                     </td>
@@ -32,60 +37,78 @@
                 {{/each}}
             </tbody>
         </table>
-    </section>
 
+    </section>
     <section id="insert">
-        <h2>Add a New Subscription - Language Model</h2>
-        <form action="/subscriptionLanguageModels" method="post">
+        <h2>Add a New Subscription Language Model</h2>
+        <form action="/subscriptionLanguageModels/add" method="post">
             <fieldset>
-                <legend>Subscription - Language Model Details:</legend>
-                <label for="subscriptionID">Subscription:</label>
+                <legend>Subscription Language Model Details:</legend>
+
+                <label for="subscriptionID">Subscription</label>
                 <select id="subscriptionID" name="subscriptionID" required>
+                    <option value="" selected disabled>Choose a Subscription</option>
                     {{#each subscriptions}}
-                    <option value="{{this.subscriptionID}}">{{this.subscriptionName}}</option>
+                    <option value="{{this.subscriptionID}}">{{this.subscriptionID}} - {{this.subscriptionName}}</option>
                     {{/each}}
                 </select><br><br>
 
-                <label for="languageModelID">Language Model:</label>
+                <label for="languageModelID">Language Model</label>
                 <select id="languageModelID" name="languageModelID" required>
-                    {{#each models}}
-                    <option value="{{this.languageModelID}}">{{this.modelName}}</option>
+                    <option value="" selected disabled>Choose a Language Model</option>
+                    {{#each languageModels}}
+                    <option value="{{this.languageModelID}}">{{this.languageModelID}} - {{this.languageModelName}}
+                    </option>
                     {{/each}}
-                </select>
+                </select><br><br>
+
             </fieldset>
             <br>
-            <input type="submit" value="Add Subscription - Language Model">
+            <input type="submit" value="Add Subscription Language Model">
         </form>
     </section>
-
     <section id="update">
-        <h2>Update Existing Subscription - Language Model</h2>
-        <form action="/subscriptionLanguageModels/update" method="post">
+        <h2>Update Existing Subscription Language Model</h2>
+        <form id="updateForm" action="/subscriptionLanguageModels/update" method="post">
             <fieldset>
-                <legend>Update Subscription - Language Model</legend>
-                <label for="subscriptionLanguageModelID">Select Entry:</label>
+                <legend>Update Subscription Language Model</legend>
+
+                <label for="subscriptionLanguageModelID">Subscription Language Model ID</label>
                 <select id="subscriptionLanguageModelID" name="subscriptionLanguageModelID" required>
+                    {{#if slmData}}
+                    <option value="{{slmData.subscriptionLanguageModelID}}" selected>
+                        {{slmData.subscriptionLanguageModelID}} - {{slmData.modelName}}</option>
+                    {{else}}
+                    <option value="" selected disabled>Select a Model</option>
+                    {{/if}}
                     {{#each subscriptionLanguageModels}}
-                    <option value="{{this.subscriptionLanguageModelID}}">{{this.subscriptionName}} - {{this.modelName}}</option>
+                    <option value="{{this.subscriptionLanguageModelID}}">{{this.subscriptionLanguageModelID}} -
+                        {{this.modelName}}</option>
                     {{/each}}
                 </select><br><br>
 
-                <label for="subscriptionID">Subscription:</label>
+                <label for="subscriptionID">Subscription</label>
                 <select id="subscriptionID" name="subscriptionID" required>
                     {{#each subscriptions}}
-                    <option value="{{this.subscriptionID}}">{{this.subscriptionName}}</option>
+                    <option value="{{this.subscriptionID}}" {{#if slmData}}{{#ifCond this.subscriptionID '=='
+                        slmData.subscriptionID}}selected{{/ifCond}}{{/if}}>{{this.subscriptionID}} -
+                        {{this.subscriptionName}}</option>
                     {{/each}}
                 </select><br><br>
 
-                <label for="languageModelID">Language Model:</label>
+                <label for="languageModelID">Language Model</label>
                 <select id="languageModelID" name="languageModelID" required>
-                    {{#each models}}
-                    <option value="{{this.languageModelID}}">{{this.modelName}}</option>
+                    {{#each languageModels}}
+                    <option value="{{this.languageModelID}}" {{#if slmData}}{{#ifCond this.languageModelID '=='
+                        slmData.languageModelID}}selected{{/ifCond}}{{/if}}>{{this.languageModelID}} -
+                        {{this.languageModelName}}</option>
                     {{/each}}
-                </select>
+                </select><br><br>
+
             </fieldset>
             <br>
-            <input type="submit" value="Update Subscription - Language Model">
+            <input type="submit" value="Update Subscription Language Model">
         </form>
     </section>
+
 </main>
