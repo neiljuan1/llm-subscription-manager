@@ -206,3 +206,16 @@ FROM Subscriptions as s
 INNER JOIN SubscriptionLanguageModels as slm ON s.subscriptionID = slm.subscriptionID
 INNER JOIN LanguageModels as lm ON slm.languageModelID = lm.languageModelID
 WHERE slm.subscriptionLanguageModelID = :subscriptionLanguageModelID; -- example - :subscriptionLanguageModelID = 1
+
+SELECT sLM.subscriptionLanguageModelID, sLM.subscriptionID, sLM.languageModelID, 
+        s.subscriptionName, l.languageModelName
+FROM SubscriptionLanguageModels sLM
+JOIN Subscriptions s ON sLM.subscriptionID = s.subscriptionID
+JOIN LanguageModels l ON sLM.languageModelID = l.languageModelID
+WHERE sLM.subscriptionLanguageModelID = ?;
+
+SELECT sLM.subscriptionLanguageModelID, sLM.subscriptionID, sLM.languageModelID, 
+        s.subscriptionName AS subscription, l.languageModelName AS modelName
+FROM SubscriptionLanguageModels sLM
+JOIN Subscriptions s ON sLM.subscriptionID = s.subscriptionID
+JOIN LanguageModels l ON sLM.languageModelID = l.languageModelID;

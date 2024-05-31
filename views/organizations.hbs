@@ -97,9 +97,9 @@
                 {{else}}
                     <option value="0">Make a selection:</option>
                 {{/if}}
-                    <option value="1">CRL</option>
-                    <option value="2">ESL</option>
-                    <option value="3">RAC</option>
+                {{#each subscriptions}}
+                    <option value="{{this.subscriptionID}}">{{this.subscriptionName}}</option>
+                {{/each}}
                 </select>
             </fieldset>
             <br>
