@@ -42,14 +42,14 @@
             <fieldset>
                 <legend>Organization Details:</legend>
                 <label for="organizationName">Name</label>
-                <input type="text" id="organizationName" name="organizationName"><br><br>
+                <input type="text" id="organizationName" name="organizationName" required><br><br>
 
                 <label for="organizationDescription">Description</label><br>
-                <textarea id="organizationDescription" name="organizationDescription"></textarea><br><br>
+                <textarea id="organizationDescription" name="organizationDescription" required></textarea><br><br>
 
                 <label for="subscription">Subscription</label>
-                <select name="subscriptionID" id="subscription">
-                    <option value="0">&nbsp;</option>
+                <select name="subscriptionID" id="subscription" required>
+                    <option value="0" selected disabled="true">Make a selection:</option>
                     {{#each subscriptions}}
                         <option value="{{this.subscriptionID}}">{{this.subscriptionName}}</option>
                     {{/each}}
@@ -69,7 +69,7 @@
                     {{#if orgData}}
                         <option value="{{orgData.organizationID}}" selected>{{orgData.organizationName}}</option>
                     {{else}}
-                        <option value="0" selected>&nbsp;</option>
+                        <option value="0" selected disabled="true">&nbsp;</option>
                     {{/if}}
                     {{#each organizations}}
                         <option value="{{this.organizationID}}">{{this.organizationName}}</option>
@@ -93,14 +93,13 @@
                 <label for="subscriptionID">Subscription</label>
                 <select name="subscriptionID" id="subscriptionID" required>
                 {{#if orgData}}
-                    <option value="{{orgData.subscriptionName}}">{{orgData.subscriptionName}}</option>
+                    <option value="{{orgData.subscriptionName}}" selected>{{orgData.subscriptionName}}</option>
                 {{else}}
-                    <option value="0">&nbsp;</option>
+                    <option value="0">Make a selection:</option>
                 {{/if}}
-                    <option value="0">&nbsp;</option>
                     <option value="1">CRL</option>
                     <option value="2">ESL</option>
-                    <option value="3" selected>RAC</option>
+                    <option value="3">RAC</option>
                 </select>
             </fieldset>
             <br>
