@@ -81,6 +81,10 @@ app.get('/subscriptions/:subscriptionID', function(req, res) {
 
     db.pool.query(query1, function(err, rows, fields){
         let subscriptions = rows;
+        subscriptions.forEach(element => {
+            let stringDate = element.startDate.toISOString();
+            element.startDate = stringDate.slice(0,10);
+        });
         db.pool.query(subQuery, function(err, rows, fields) {
             if (rows.length === 0){
                 console.log("Subscription Not Found.");
@@ -440,7 +444,7 @@ app.get('/users/:userID', function(req, res) {
                             userData.organizationName = userOrgName;
                             userData.subscriptionName = userSubName;
                             return res.render(
-                                'Users', 
+                                'users', 
                                 {data: users, organizations: organizations, subscriptions: subscriptions, userData: userData});
                         })
                     })
