@@ -94,9 +94,9 @@
                 <label for="subscriptionID">Subscription</label>
                 <select name="subscriptionID" id="subscriptionID" required>
                 {{#if orgData}}
-                    <option value="{{orgData.subscriptionName}}" selected>{{orgData.subscriptionName}}</option>
+                    <option value="{{orgData.subscriptionID}}" selected>{{orgData.subscriptionName}}</option>
                 {{else}}
-                    <option value="0">Make a selection:</option>
+                    <option value="0" disabled selected>Make a selection:</option>
                 {{/if}}
                 {{#each subscriptions}}
                     <option value="{{this.subscriptionID}}">{{this.subscriptionName}}</option>
