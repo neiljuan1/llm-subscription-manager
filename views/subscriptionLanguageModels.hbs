@@ -77,7 +77,7 @@
                 <select id="subscriptionLanguageModelID" name="subscriptionLanguageModelID" required>
                     {{#if slmData}}
                     <option value="{{slmData.subscriptionLanguageModelID}}" selected>
-                        {{slmData.subscriptionLanguageModelID}} - {{slmData.modelName}}</option>
+                        {{slmData.subscriptionLanguageModelID}} - {{slmData.languageModelName}}</option>
                     {{else}}
                     <option value="" selected disabled>Select a Model</option>
                     {{/if}}
@@ -89,19 +89,26 @@
 
                 <label for="subscriptionID">Subscription</label>
                 <select id="subscriptionID" name="subscriptionID" required>
+                    {{#if slmData}}
+                        <option value="{{slmData.subscriptionID}}" selected>{{slmData.subscriptionID}} - {{slmData.subscriptionName}}</option>
+                    {{else}}
+                        <option value="" selected disabled>Select a Subscription</option>
+                    {{/if}}
                     {{#each subscriptions}}
-                    <option value="{{this.subscriptionID}}" {{#if slmData}}{{#ifCond this.subscriptionID '=='
-                        slmData.subscriptionID}}selected{{/ifCond}}{{/if}}>{{this.subscriptionID}} -
-                        {{this.subscriptionName}}</option>
+                    <option value="{{this.subscriptionID}}">{{this.subscriptionID}} - {{this.subscriptionName}}</option>
                     {{/each}}
                 </select><br><br>
 
                 <label for="languageModelID">Language Model</label>
                 <select id="languageModelID" name="languageModelID" required>
+
+                    {{#if slmData}}
+                        <option value="{{slmData.languageModelID}}" selected>{{slmData.languageModelID}} - {{slmData.languageModelName}}</option>
+                    {{else}}
+                        <option value="" selected disabled>Select a Model</option>
+                    {{/if}}
                     {{#each languageModels}}
-                    <option value="{{this.languageModelID}}" {{#if slmData}}{{#ifCond this.languageModelID '=='
-                        slmData.languageModelID}}selected{{/ifCond}}{{/if}}>{{this.languageModelID}} -
-                        {{this.languageModelName}}</option>
+                        <option value="{{this.languageModelID}}">{{this.languageModelID}} - {{this.languageModelName}}</option>
                     {{/each}}
                 </select><br><br>
 
