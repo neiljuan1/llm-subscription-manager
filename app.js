@@ -243,7 +243,7 @@ app.get('/users', function(req, res) {
             let organizations = rows;
             db.pool.query(query3, function(err, rows, fields){
                 let subscriptions = rows;
-                return res.render('Users', {data: users, organizations: organizations, subscriptions: subscriptions, errorMessage: errorMessage});
+                return res.render('users', {data: users, organizations: organizations, subscriptions: subscriptions, errorMessage: errorMessage});
             })
         })
     })
@@ -300,7 +300,7 @@ app.get('/users/:userID', function(req, res) {
                             userData.organizationName = userOrgName;
                             userData.subscriptionName = userSubName;
                             return res.render(
-                                'Users', 
+                                'users', 
                                 {data: users, organizations: organizations, subscriptions: subscriptions, userData: userData});
                         })
                     })
