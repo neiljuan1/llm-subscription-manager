@@ -6,7 +6,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('public'));
 const path = require('path');
-PORT = 9000;
+PORT = 9343;
 
 // database
 let db = require('./database/db-connector.js');
@@ -25,14 +25,6 @@ app.get('/', function(req, res) {
 
 app.get('/index', function(req, res) {
     res.render('index');
-});
-
-app.get('/languageModels', function(req, res) {
-    res.render('languageModels');
-});
-
-app.get('/languageModels/edit', function(req, res) {
-    res.render('editLanguageModels');
 });
 
 app.get('/subscriptions', function(req, res) {
@@ -222,13 +214,161 @@ app.post("/organizations/update", function(req, res){
     });
 })
 
-app.get('/subscriptionLanguageModels', function(req, res) {
-    res.render('subscriptionLanguageModels');
+// GET Language Models
+app.get('/languageModels', function(req, res) {
+    let queryAllModels = 'SELECT * FROM LanguageModels;';
+    db.pool.query(queryAllModels, function(err, models) {
+        if (err) {
+            console.log(err);
+            res.sendStatus(500);
+        } else {
+            let specificModelData = null;
+            if (req.query.languageModelID) {
+                let languageModelID = req.query.languageModelID;
+                specificModelData = models.find(model => model.languageModelID.toString() === languageModelID);
+            }
+            res.render('languageModels', {
+                models: models,
+                modelData: specificModelData
+            });
+        }
+    });
 });
 
-app.get('/subscriptionLanguageModels/edit', function(req, res) {
-    res.render('editSubscriptionLanguageModels');
+// ADD Language Model
+app.post('/languageModels/add', function(req, res) {
+    let { languageModelName, languageModelDescription, creditsPerToken } = req.body;
+    let query = 'INSERT INTO LanguageModels (languageModelName, languageModelDescription, creditsPerToken) VALUES (?, ?, ?)';
+    db.pool.query(query, [languageModelName, languageModelDescription, parseFloat(creditsPerToken)], function(error, results) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.redirect('/languageModels');
+        }
+    });
 });
+
+// DELETE Language Model
+app.post('/languageModels/delete', function(req, res) {
+    let { languageModelID } = req.body;
+    let query = 'DELETE FROM LanguageModels WHERE languageModelID = ?';
+    db.pool.query(query, [parseInt(languageModelID)], function(error, results) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.redirect('/languageModels');
+        }
+    });
+});
+
+// UPDATE Language Model
+app.post('/languageModels/update', function(req, res) {
+    let { languageModelID, languageModelName, languageModelDescription, creditsPerToken } = req.body;
+    let query = `UPDATE LanguageModels SET languageModelName = ?, languageModelDescription = ?, creditsPerToken = ? WHERE languageModelID = ?`;
+    db.pool.query(query, [languageModelName, languageModelDescription, parseFloat(creditsPerToken), parseInt(languageModelID)], function(error, results) {
+        if (error) {
+            console.log('SQL Error: ', error);
+            res.sendStatus(400);
+        } else {
+            res.redirect('/languageModels');
+        }
+    });
+});
+
+
+
+// GET specific Language Model by ID
+app.get('/languageModels/:languageModelID', function(req, res) {
+    let languageModelID = req.params.languageModelID;
+    let queryModel = 'SELECT * FROM LanguageModels WHERE languageModelID = ?;';
+    let queryAllModels = 'SELECT * FROM LanguageModels;';
+
+    db.pool.query(queryAllModels, function(err, models) {
+        if (err) {
+            console.log(err);
+            res.sendStatus(500);
+        } else {
+            db.pool.query(queryModel, [languageModelID], function(err, result) {
+                if (err) {
+                    console.log(err);
+                    res.sendStatus(500);
+                } else if (result.length === 0) {
+                    console.log("Language Model Not Found.");
+                    res.sendStatus(404);
+                } else {
+                    let modelData = result[0];
+                    res.render('languageModels', {
+                        models: models,
+                        modelData: modelData
+                    });
+                }
+            });
+        }
+    });
+});
+
+
+
+
+
+
+// GET Subscription Language Models
+app.get('/subscriptionLanguageModels', function(req, res) {
+    let query = 'SELECT SubscriptionLanguageModels.*, Subscriptions.subscriptionName, LanguageModels.modelName FROM SubscriptionLanguageModels JOIN Subscriptions ON Subscriptions.subscriptionID = SubscriptionLanguageModels.subscriptionID JOIN LanguageModels ON LanguageModels.languageModelID = SubscriptionLanguageModels.languageModelID;';
+    db.pool.query(query, function(err, slModels) {
+        if (err) {
+            console.log(err);
+            res.sendStatus(500);
+        } else {
+            res.render('subscriptionLanguageModels', {slModels: slModels});
+        }
+    });
+});
+
+// ADD Subscription Language Model
+app.post('/subscriptionLanguageModels/add', function(req, res) {
+    let { subscriptionID, languageModelID } = req.body;
+    let query = 'INSERT INTO SubscriptionLanguageModels (subscriptionID, languageModelID) VALUES (?, ?)';
+    db.pool.query(query, [subscriptionID, languageModelID], function(error, results) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.redirect('/subscriptionLanguageModels');
+        }
+    });
+});
+
+// DELETE Subscription Language Model
+app.post('/subscriptionLanguageModels/delete', function(req, res) {
+    let { subscriptionLanguageModelID } = req.body;
+    let query = 'DELETE FROM SubscriptionLanguageModels WHERE subscriptionLanguageModelID = ?';
+    db.pool.query(query, [subscriptionLanguageModelID], function(error, results) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.redirect('/subscriptionLanguageModels');
+        }
+    });
+});
+
+// UPDATE Subscription Language Model
+app.post('/subscriptionLanguageModels/update', function(req, res) {
+    let { subscriptionLanguageModelID, subscriptionID, languageModelID } = req.body;
+    let query = 'UPDATE SubscriptionLanguageModels SET subscriptionID = ?, languageModelID = ? WHERE subscriptionLanguageModelID = ?';
+    db.pool.query(query, [subscriptionID, languageModelID, subscriptionLanguageModelID], function(error, results) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.redirect('/subscriptionLanguageModels');
+        }
+    });
+});
+
 
 // USERS -------------------------------
 // READ User Data
@@ -243,7 +383,7 @@ app.get('/users', function(req, res) {
             let organizations = rows;
             db.pool.query(query3, function(err, rows, fields){
                 let subscriptions = rows;
-                return res.render('Users', {data: users, organizations: organizations, subscriptions: subscriptions, errorMessage: errorMessage});
+                return res.render('users', {data: users, organizations: organizations, subscriptions: subscriptions, errorMessage: errorMessage});
             })
         })
     })

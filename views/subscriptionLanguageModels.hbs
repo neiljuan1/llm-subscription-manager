@@ -1,4 +1,3 @@
-
 <header>
     <h1>Subscriptions - Language Models</h1>
 </header>
@@ -6,66 +5,87 @@
 <main>
     <section>
         <h2>Browse Subscriptions - Language Models</h2>
-        <a href="/subscriptionLanguageModels/edit">Add or Edit Subscriptions - Language Models</a>
         <table>
             <thead>
                 <tr>
-                    <th>subscriptionLanguageModelID</th>
-                    <th>subscriptionID</th>
-                    <th>languageModelID</th>
+                    <th>ID</th>
                     <th>Subscription</th>
-                    <th>Model Name</th>
+                    <th>Model</th>
                     <th></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
+                {{#each subscriptionLanguageModels}}
                 <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>CRL</td>
-                    <td>gpt-3.5 turbo</td>
-                    <td><a href="/subscriptionLanguageModels/edit#update">edit</a></td>
-                    <td><a href="/subscriptionLanguageModels/edit#delete">delete</a></td>
+                    <td>{{this.subscriptionLanguageModelID}}</td>
+                    <td>{{this.subscriptionName}}</td>
+                    <td>{{this.modelName}}</td>
+                    <td><a href="/subscriptionLanguageModels/{{this.subscriptionLanguageModelID}}#update">edit</a></td>
+                    <td>
+                        <form action="/subscriptionLanguageModels/delete" method="post">
+                            <input type="hidden" name="subscriptionLanguageModelID" value="{{this.subscriptionLanguageModelID}}">
+                            <button type="submit">delete</button>
+                        </form>
+                    </td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>2</td>
-                    <td>1</td>
-                    <td>ESL</td>
-                    <td>gpt-4-turbo</td>
-                    <td><a href="/subscriptionLanguageModels/edit#update">edit</a></td>
-                    <td><a href="/subscriptionLanguageModels/edit#delete">delete</a></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>2</td>
-                    <td>4</td>
-                    <td>RAC</td>
-                    <td>gpt-4-turbo</td>
-                    <td><a href="/subscriptionLanguageModels/edit#update">edit</a></td>
-                    <td><a href="/subscriptionLanguageModels/edit#delete">delete</a></td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>3</td>
-                    <td>1</td>
-                    <td>RAC</td>
-                    <td>whisper</td>
-                    <td><a href="/subscriptionLanguageModels/edit#update">edit</a></td>
-                    <td><a href="/subscriptionLanguageModels/edit#delete">delete</a></td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>3</td>
-                    <td>5</td>
-                    <td>barnes-indv</td>
-                    <td>tts</td>
-                    <td><a href="/subscriptionLanguageModels/edit#update">edit</a></td>
-                    <td><a href="/subscriptionLanguageModels/edit#delete">delete</a></td>
-                </tr>
+                {{/each}}
             </tbody>
         </table>
+    </section>
+
+    <section id="insert">
+        <h2>Add a New Subscription - Language Model</h2>
+        <form action="/subscriptionLanguageModels" method="post">
+            <fieldset>
+                <legend>Subscription - Language Model Details:</legend>
+                <label for="subscriptionID">Subscription:</label>
+                <select id="subscriptionID" name="subscriptionID" required>
+                    {{#each subscriptions}}
+                    <option value="{{this.subscriptionID}}">{{this.subscriptionName}}</option>
+                    {{/each}}
+                </select><br><br>
+
+                <label for="languageModelID">Language Model:</label>
+                <select id="languageModelID" name="languageModelID" required>
+                    {{#each models}}
+                    <option value="{{this.languageModelID}}">{{this.modelName}}</option>
+                    {{/each}}
+                </select>
+            </fieldset>
+            <br>
+            <input type="submit" value="Add Subscription - Language Model">
+        </form>
+    </section>
+
+    <section id="update">
+        <h2>Update Existing Subscription - Language Model</h2>
+        <form action="/subscriptionLanguageModels/update" method="post">
+            <fieldset>
+                <legend>Update Subscription - Language Model</legend>
+                <label for="subscriptionLanguageModelID">Select Entry:</label>
+                <select id="subscriptionLanguageModelID" name="subscriptionLanguageModelID" required>
+                    {{#each subscriptionLanguageModels}}
+                    <option value="{{this.subscriptionLanguageModelID}}">{{this.subscriptionName}} - {{this.modelName}}</option>
+                    {{/each}}
+                </select><br><br>
+
+                <label for="subscriptionID">Subscription:</label>
+                <select id="subscriptionID" name="subscriptionID" required>
+                    {{#each subscriptions}}
+                    <option value="{{this.subscriptionID}}">{{this.subscriptionName}}</option>
+                    {{/each}}
+                </select><br><br>
+
+                <label for="languageModelID">Language Model:</label>
+                <select id="languageModelID" name="languageModelID" required>
+                    {{#each models}}
+                    <option value="{{this.languageModelID}}">{{this.modelName}}</option>
+                    {{/each}}
+                </select>
+            </fieldset>
+            <br>
+            <input type="submit" value="Update Subscription - Language Model">
+        </form>
     </section>
 </main>
