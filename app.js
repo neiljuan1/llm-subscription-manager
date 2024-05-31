@@ -39,7 +39,7 @@ app.get('/subscriptions', function(req, res) {
     })
 });
 
-
+// CREATE Subscriptions
 app.post('/subscriptions/add', function(req, res) {
     let subscriptions = req.body;
 
@@ -56,7 +56,7 @@ app.post('/subscriptions/add', function(req, res) {
     });
 })
 
-
+// DELETE Subscriptions
 app.post('/subscriptions/delete', function(req, res) {
     let subscriptions = req.body;
     let subscriptionID = parseInt(subscriptions.subscriptionID);
@@ -73,7 +73,7 @@ app.post('/subscriptions/delete', function(req, res) {
     });
 })
 
-
+// Populate UPDATE Subscriptions Form
 app.get('/subscriptions/:subscriptionID', function(req, res) {
     let subscriptionID = req.params.subscriptionID;
     let query1 = "SELECT * FROM Subscriptions;";
@@ -81,6 +81,7 @@ app.get('/subscriptions/:subscriptionID', function(req, res) {
 
     db.pool.query(query1, function(err, rows, fields){
         let subscriptions = rows;
+        // Format date for table
         subscriptions.forEach(element => {
             let stringDate = element.startDate.toISOString();
             element.startDate = stringDate.slice(0,10);
@@ -103,6 +104,7 @@ app.get('/subscriptions/:subscriptionID', function(req, res) {
 
 });
 
+// UPDATE Subscriptions
 app.post('/subscriptions/update', function(req, res) {
     let data = req.body;
     console.log(data);
@@ -121,7 +123,6 @@ app.post('/subscriptions/update', function(req, res) {
 });
 
 
-
 // ORGANIZATIONS -------------------------------
 app.get('/organizations', function(req, res) {
     let query1 = 'SELECT * FROM Organizations;'
@@ -136,6 +137,7 @@ app.get('/organizations', function(req, res) {
     })
 });
 
+// CREATE organizations
 app.post('/organizations/add', function(req, res) {
     let organizations = req.body;
 
@@ -152,6 +154,7 @@ app.post('/organizations/add', function(req, res) {
     });
 })
 
+// DELETE organizations
 app.post('/organizations/delete', function(req, res) {
     let organizations = req.body;
     let organizationID = parseInt(organizations.organizationID);
@@ -168,6 +171,7 @@ app.post('/organizations/delete', function(req, res) {
     });
 })
 
+// Populate UPDATE organizations from
 app.get('/organizations/:organizationID', function(req, res) {
     let organizationID = req.params.organizationID;
     console.log(organizationID);
@@ -203,6 +207,7 @@ app.get('/organizations/:organizationID', function(req, res) {
     })
 });
 
+// UPDATE organizations
 app.post("/organizations/update", function(req, res){
     let data = req.body;
     console.log(data);
