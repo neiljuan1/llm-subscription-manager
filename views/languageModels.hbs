@@ -69,14 +69,18 @@
                 </select><br><br>
                 {{/if}}
                 <label for="languageModelName">Model Name:</label>
-                <input type="text" id="languageModelName" name="languageModelName" value="{{modelData.languageModelName}}" required><br><br>
+                <input type="text" id="languageModelName" name="languageModelName"
+                    value="{{modelData.languageModelName}}" required><br><br>
                 <label for="languageModelDescription">Description:</label>
-                <input type="text" id="languageModelDescription" name="languageModelDescription" value="{{modelData.languageModelDescription}}" required><br><br>
+                <input type="text" id="languageModelDescription" name="languageModelDescription"
+                    value="{{modelData.languageModelDescription}}" required><br><br>
                 <label for="creditsPerToken">Credits per Token:</label>
-                <input type="number" id="creditsPerToken" name="creditsPerToken" value="{{modelData.creditsPerToken}}" required>
+                <input type="number" id="creditsPerToken" name="creditsPerToken" value="{{modelData.creditsPerToken}}"
+                    required>
                 <br>
-                <input type="submit" value="Update Language Model">
             </fieldset>
+            <br>
+            <input type="submit" value="Update Language Model">
         </form>
     </section>
 </main>
