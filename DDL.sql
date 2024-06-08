@@ -82,28 +82,28 @@ INSERT INTO LanguageModels (languageModelName, languageModelDescription, credits
 -- Insert data into Organizations
 INSERT INTO Organizations (organizationID, organizationName, organizationDescription, subscriptionID)
 VALUES
-    (1, 'Combustion Research Lab', 'Combustion, particulate emissions, nanomaterial synthesis', 1),
-    (2, 'Energy and Sustainability Lab', 'Research lab in the Engineering department focused on green energy', 2),
-    (3, 'RRC AI Club', 'Student organization focused on Artificial Intelligence', 3);
+    (1, 'Combustion Research Lab', 'Combustion, particulate emissions, nanomaterial synthesis', (SELECT subscriptionID FROM Subscriptions WHERE subscriptionName = 'CRL')),
+    (2, 'Energy and Sustainability Lab', 'Research lab in the Engineering department focused on green energy', (SELECT subscriptionID FROM Subscriptions WHERE subscriptionName = 'ESL')),
+    (3, 'RRC AI Club', 'Student organization focused on Artificial Intelligence', (SELECT subscriptionID FROM Subscriptions WHERE subscriptionName = 'RAC'));
 
 
 -- Insert data into Users
 INSERT INTO Users (userID, userName, email, password, remainingCredits, organizationID, subscriptionID)
 VALUES
-    (1, 'johnSmith', 'jsmith@gmail.com', 'eKv98W%p', 500000, 1, NULL),
-    (2, 'kyleLowry', 'klowry@outlook.com', 'mJ%63\#d', 500000, 1, NULL),
-    (3, 'kelvinLi', 'kli@gmail.com', 'We}7up.>', 1000000, 2, NULL),
-    (4, 'aliZahir', 'azahir@gmail.com', 'Gx(-,6;&', 14000, 3, NULL),
-    (5, 'scootBarnes', 'sbarnes@torontomu.ca', 'tor!2204', 5000, NULL, 4);
+    (1, 'johnSmith', 'jsmith@gmail.com', 'eKv98W%p', 500000, (SELECT organizationID from Organizations WHERE organizationName = 'Combustion Research Lab'), NULL),
+    (2, 'kyleLowry', 'klowry@outlook.com', 'mJ%63\#d', 500000, (SELECT organizationID from Organizations WHERE organizationName = 'Combustion Research Lab'), NULL),
+    (3, 'kelvinLi', 'kli@gmail.com', 'We}7up.>', 1000000, (SELECT organizationID from Organizations WHERE organizationName = 'Energy and Sustainability Lab'), NULL),
+    (4, 'aliZahir', 'azahir@gmail.com', 'Gx(-,6;&', 14000, (SELECT organizationID from Organizations WHERE organizationName = 'RRC AI Club'), NULL),
+    (5, 'scootBarnes', 'sbarnes@torontomu.ca', 'tor!2204', 5000, NULL, (SELECT subscriptionID FROM Subscriptions WHERE subscriptionName = 'barnes-indv'));
 
 
 -- Insert data into bridge
 INSERT INTO SubscriptionLanguageModels (subscriptionID, languagemodelID) VALUES 
-(1, 2),
-(2, 1),
-(4, 4),
-(3, 1),
-(3, 5);
+((SELECT subscriptionID FROM Subscriptions WHERE subscriptionName = 'CRL'), (SELECT languageModelID from LanguageModels WHERE languageModelName = 'gpt-3.5 turbo')),
+((SELECT subscriptionID FROM Subscriptions WHERE subscriptionName = 'ESL'), (SELECT languageModelID from LanguageModels WHERE languageModelName = 'gpt-4-turbo')),
+((SELECT subscriptionID FROM Subscriptions WHERE subscriptionName = 'barnes-indv'), (SELECT languageModelID from LanguageModels WHERE languageModelName = 'tts')),
+((SELECT subscriptionID FROM Subscriptions WHERE subscriptionName = 'RAC'), (SELECT languageModelID from LanguageModels WHERE languageModelName = 'gpt-4-turbo')),
+((SELECT subscriptionID FROM Subscriptions WHERE subscriptionName = 'RAC'), (SELECT languageModelID from LanguageModels WHERE languageModelName = 'whisper'));
 
 
 SET FOREIGN_KEY_CHECKS = 1;
