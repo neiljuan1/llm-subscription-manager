@@ -14,7 +14,7 @@ The CS340 starter code was used as a template for:
   * Adapted from Step 1 - Copied db-connector.js for importing mysql and creating pool and adjusted with teams values
   * https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%201%20-%20Connecting%20to%20a%20MySQL%20Database
   * Date: 05/16/2024
-* Handlebars in main.hbs and app.js for setting up express-handlebars
+* Handlebar files and structures and app.js for setting up express-handlebars
   * Adapted from Step 3 - Used main.hbs as a guide to create our hbs files 
   * https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%203%20-%20Integrating%20a%20Templating%20Engine%20(Handlebars)
   * Date: 05/24/2024

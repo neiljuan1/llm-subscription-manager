@@ -1,4 +1,8 @@
-// Code taken from nodejs-starter-app for template
+// Citation Ajax
+// Deleting a User using Ajax
+// Adapted from Step 7 - Delete User from Ajax template used for delete_user.js based on Dynamically Deleting Data.
+// https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%207%20-%20Dynamically%20Deleting%20Data
+// Date: 05/24/2024
 
 function deleteUser(userID) {
     // Put our data we want to send in a javascript object

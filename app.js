@@ -1,3 +1,7 @@
+// Citation for setup/database/templating engine
+// Adapted from Step 0 - Copied setup express/app declarations and listen method
+// https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%200%20-%20Setting%20Up%20Node.js
+// Date: 05/16/2024
 
 // Credit for setup and ajax from nodejs-starter template
 let express = require('express');
@@ -18,6 +22,12 @@ const { errorMonitor } = require('events');
 app.engine('.hbs', engine({extname: ".hbs", partialsDir:[path.join(__dirname, 'views/partials')]})); // Create an instance of the handlebars engine to process templates
 app.set('view engine', '.hbs');                 // Tell express to use handlebars engine whenever it encounters .hbs file
 
+
+// Citation for Route functions
+// Adding/Updating/Deleting/Dynamic display of data in handlebars files for the tables, and querying the database from app.js
+// Adapted from Step 4 - 8 - Based on table structures and form structures in hbs files, adapted the templates for querying data from database in route functions, Delete User from Ajax template used for delete_user.js
+// https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%204%20-%20Dynamically%20Displaying%20Data
+// Date: 05/24/2024 for Users routes and 05/30/2024 for other entities
 // Routes
 app.get('/', function(req, res) {
     res.render('index');
@@ -663,6 +673,10 @@ app.delete('/users/deleteAjax/', function(req, res, next) {
 
 
 
+// Citation for setup listener
+// Adapted from Step 0 - Copied setup express/app declarations and listen method
+// https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%200%20-%20Setting%20Up%20Node.js
+// Date: 05/16/2024
 
 // Listener
 app.listen(PORT, () => {
