@@ -74,7 +74,7 @@ Date: 05/24/2024
         <form id="updateForm" action="/organizations/update" method="post">
             <fieldset>
                 <legend>Update Organization</legend>
-                <label for="organizationID">Organization ID</label>
+                <label for="organizationID">Organization</label>
                 <select id="organization" name="organizationID" required>
                     {{#if orgData}}
                         <option value="{{orgData.organizationID}}" selected>{{orgData.organizationName}}</option>
